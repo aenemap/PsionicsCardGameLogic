@@ -7,6 +7,9 @@ class Card:
         self.sub_type = sub_type,
         self.energy_cost = energy_cost
 
+    def printCard(card):
+        print('{0} - {1} - {2}'.format(card.id, card.name, card.type))
+
 class ShieldCard(Card):
 
     def __init__(self, id, name, type, sub_type, energy_cost, consistency_value):
@@ -16,7 +19,7 @@ class ShieldCard(Card):
 
 class TalentCard(Card):
     def __init__(self, id, name, type, sub_type, energy_cost, trash_value):
-        Card._init__(self, id, name, type, sub_type, energy_cost)
+        Card.__init__(self, id, name, type, sub_type, energy_cost)
         self.trash_value = trash_value
 
 

@@ -34,3 +34,11 @@ cardPool.append(ShieldCard(
     sub_type=CardSubType.Mirror,
     energy_cost=2,
     consistency_value=3))
+
+cardPool.append(TalentCard(
+    id=uuid.uuid4(),
+    name='Talent4',
+    type= CardType.Talent,
+    sub_type= '',
+    energy_cost=2,
+    trash_value=3))

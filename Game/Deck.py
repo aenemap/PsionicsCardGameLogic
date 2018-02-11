@@ -1,5 +1,6 @@
 from random import shuffle
 from collections import deque
+from Game.Card import Card
 
 class Deck:
 
@@ -25,4 +26,4 @@ class Deck:
 
     def printDeck(self):
         for card in self.deck:
-            print('{0},{1}'.format(card.id, card.name))
+            Card.printCard(card);
