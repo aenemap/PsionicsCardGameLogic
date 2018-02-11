@@ -1,14 +1,22 @@
 from Game.Card import *
 from Game.Deck import Deck
+from Game.CardPool import *
+from Game.Player import Player
+from Game.Deck import Deck
+import uuid
 
 
-shield1 = ShieldCard(
-        id = 2,
-        name = 'shieldCard',
-        type = 'Shield',
-        sub_type = 'Basic',
-        cost = '4',
-        constraction_value = '5')
+deck1 = Deck(uuid.uuid4())
 
-# print(card1.name)
-print(shield1.name)
+for card in cardPool:
+    deck1.addCardToDeck(card)
+
+for card in deck1.deck:
+    print('{0},{1}'.format(card.id, card.name))
+
+deck1.shuffleDeck()
+
+print('--------------------------------')
+
+for card in deck1.deck:
+    print('{0},{1}'.format(card.id, card.name))
