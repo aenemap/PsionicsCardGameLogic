@@ -42,3 +42,27 @@ cardPool.append(TalentCard(
     sub_type= '',
     energy_cost=2,
     trash_value=3))
+
+cardPool.append(TalentCard(
+    id=uuid.uuid4(),
+    name='Talent5',
+    type= CardType.Talent,
+    sub_type= '',
+    energy_cost=2,
+    trash_value=3))
+
+cardPool.append(TalentCard(
+    id=uuid.uuid4(),
+    name='Talent6',
+    type= CardType.Talent,
+    sub_type= '',
+    energy_cost=2,
+    trash_value=3))
+
+cardPool.append(TalentCard(
+    id=uuid.uuid4(),
+    name='Talent7',
+    type= CardType.Talent,
+    sub_type= '',
+    energy_cost=2,
+    trash_value=3))

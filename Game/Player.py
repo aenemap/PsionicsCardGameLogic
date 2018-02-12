@@ -4,3 +4,4 @@ class Player:
         self.name = name
         self.health = health
         self.deck = deck
+        self.hand = []
