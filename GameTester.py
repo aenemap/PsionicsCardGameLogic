@@ -4,7 +4,11 @@ from Game.CardPool import *
 from Game.Player import Player
 from Game.Deck import Deck
 from Game.Hand import Hand
+from Game.Table import Table
+from Game.Enums import *
+
 import uuid
+import sys
 
 
 deck1 = Deck(uuid.uuid4(), 'Player1 Deck')
@@ -49,12 +53,11 @@ player1.hand.printHand()
 print('Player 2 Hand')
 player2.hand.printHand()
 
+playTable = Table(player1=player1, player2=player2)
 
 
-player1.deck.drawCardFromTopOfDeck()
+player1.playCard(list(filter(lambda x: x.type == CardType.Shield, player1.hand.getHand()))[0])
 
+playTable.printTable()
 
-
-# for x in range(0, 2):
-#     card = deck1.drawCardFromTopOfDeck()
-#     print(card.name)
+playTable.startGame()
