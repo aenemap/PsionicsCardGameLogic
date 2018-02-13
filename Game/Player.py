@@ -16,3 +16,5 @@ class Player:
     def playCard(self, card):
         if card.type == CardType.Shield:
             self.playerArea['Shields'].append(card)
+        elif card.type == CardType.Talent:
+            self.playerArea['Talents'].append(card)

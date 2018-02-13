@@ -57,6 +57,8 @@ playTable = Table(player1=player1, player2=player2)
 
 
 player1.playCard(list(filter(lambda x: x.type == CardType.Shield, player1.hand.getHand()))[0])
+player2.playCard(list(filter(lambda x: x.type == CardType.Talent, player1.hand.getHand()))[0])
+
 
 playTable.printTable()
 

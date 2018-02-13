@@ -40,8 +40,29 @@ class Table:
 
     def printTable(self):
 
-        print('------------- Player1 play area ---------------')
+        print('------------- Player2 play area ---------------')
+
         print('')
+        for card in self.player2.playerArea['DiscardPile']:
+            print(card.name)
+        print('------------- Discard Pile ---------------- ')
+
+        print('')
+        for card in self.player2.playerArea['Talents']:
+            print(card.name)
+        print('------------- Talents ---------------- ')
+
+
+        print('')
+        for card in self.player2.playerArea['Shields']:
+            print(card.name)
+        print('------------- Shields ---------------- ')
+
+
+        print('')
+        print('================================================================')
+        print('')
+
         print('------------- Shields ---------------- ')
         for card in self.player1.playerArea['Shields']:
             print(card.name)
@@ -57,20 +78,4 @@ class Table:
             print(card.name)
 
         print('')
-        print('')
-
-        print('------------- Player2 play area ---------------')
-        print('')
-        print('------------- Shields ---------------- ')
-        for card in self.player2.playerArea['Shields']:
-            print(card.name)
-
-        print('')
-        print('------------- Talents ---------------- ')
-        for card in self.player2.playerArea['Talents']:
-            print(card.name)
-
-        print('')
-        print('------------- Discard Pile ---------------- ')
-        for card in self.player2.playerArea['DiscardPile']:
-            print(card.name)
+        print('------------- Player1 play area ---------------')
