@@ -1,10 +1,10 @@
 from Game.Card import *
 from Game.Enums import *
-import uuid
+import uuid , random
 
 cardPool = []
 cardPool.append(ShieldCard(
-    id=uuid.uuid4(),
+    id=random.randint(1, 100),
     name='Shield1',
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
@@ -12,7 +12,7 @@ cardPool.append(ShieldCard(
     consistency_value=3))
 
 cardPool.append(ShieldCard(
-    id=uuid.uuid4(),
+    id=random.randint(1, 100),
     name='Shield2',
     type= CardType.Shield,
     sub_type=CardSubType.Absorbing,
@@ -20,7 +20,7 @@ cardPool.append(ShieldCard(
     consistency_value=3))
 
 cardPool.append(ShieldCard(
-    id=uuid.uuid4(),
+    id=random.randint(1, 100),
     name='Shield3',
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
@@ -28,7 +28,7 @@ cardPool.append(ShieldCard(
     consistency_value=3))
 
 cardPool.append(ShieldCard(
-    id=uuid.uuid4(),
+    id=random.randint(1, 100),
     name='Shield4',
     type= CardType.Shield,
     sub_type=CardSubType.Mirror,
@@ -36,7 +36,7 @@ cardPool.append(ShieldCard(
     consistency_value=3))
 
 cardPool.append(TalentCard(
-    id=uuid.uuid4(),
+    id=random.randint(1, 100),
     name='Talent4',
     type= CardType.Talent,
     sub_type= '',
@@ -44,7 +44,7 @@ cardPool.append(TalentCard(
     trash_value=3))
 
 cardPool.append(TalentCard(
-    id=uuid.uuid4(),
+    id=random.randint(1, 100),
     name='Talent5',
     type= CardType.Talent,
     sub_type= '',
@@ -52,7 +52,7 @@ cardPool.append(TalentCard(
     trash_value=3))
 
 cardPool.append(TalentCard(
-    id=uuid.uuid4(),
+    id=random.randint(1, 100),
     name='Talent6',
     type= CardType.Talent,
     sub_type= '',
@@ -60,7 +60,7 @@ cardPool.append(TalentCard(
     trash_value=3))
 
 cardPool.append(TalentCard(
-    id=uuid.uuid4(),
+    id=random.randint(1, 100),
     name='Talent7',
     type= CardType.Talent,
     sub_type= '',
