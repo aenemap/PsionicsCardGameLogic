@@ -12,3 +12,12 @@ class CardSubType(Enum):
     Mirror = 'Mirror'
     Focus = 'Focus'
     Chaos = 'Chaos'
+
+class TurnAction(Enum):
+    Concentration = 'Concentration'
+    PlayEvent = 'PlayEvent'
+    InitiateAttack = 'InitiateAttack'
+    DrawCard = 'DrawCard'
+    DevelopTalent = 'DevelopTalent'
+    Focus = 'Focus'
+    CreateShield = 'CreateShield'

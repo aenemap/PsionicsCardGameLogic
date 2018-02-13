@@ -7,6 +7,9 @@ class Hand:
         self.max_hand_size = max_hand_size
         self.hand = []
 
+    def getHand(self):
+        return self.hand
+
     def addCardToHand(self, card):
         self.hand.append(card)
 
