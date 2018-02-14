@@ -24,13 +24,15 @@ deck2.shuffleDeck()
 player1 = Player(
     name='John',
     health=30,
-    deck=deck1
+    deck=deck1,
+    energy=5
 )
 
 player2 = Player(
     name='Nick',
     health=30,
-    deck=deck2
+    deck=deck2,
+    energy=5
 )
 
 print('Player 1 Deck')
@@ -48,16 +50,16 @@ for x in range(0, allHands.hand_size):
 player1.hand = player1Hand
 player2.hand = player2Hand
 
-print('Player 1 Hand')
-player1.hand.printHand()
-print('Player 2 Hand')
-player2.hand.printHand()
+# print('Player 1 Hand')
+# player1.hand.printHand()
+# print('Player 2 Hand')
+# player2.hand.printHand()
 
 playTable = Table(player1=player1, player2=player2)
 
 
-player1.playCard(list(filter(lambda x: x.type == CardType.Shield, player1.hand.getHand()))[0])
-player2.playCard(list(filter(lambda x: x.type == CardType.Talent, player1.hand.getHand()))[0])
+# player1.playCard(list(filter(lambda x: x.type == CardType.Shield, player1.hand.getHand()))[0])
+# player2.playCard(list(filter(lambda x: x.type == CardType.Shield, player2.hand.getHand()))[0])
 
 
 playTable.printTable()
