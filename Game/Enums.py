@@ -15,12 +15,10 @@ class CardSubType(Enum):
 
 class TurnAction(Enum):
     DrawCard = "1"
-    CreateShield = "2"
-    PlayEvent = "3"
-    DevelopTalent = "4"
-    InitiateAttack = "5"
-    Concentration = "6"
-    Focus = "7"
+    PlayCard = "2"
+    InitiateAttack = "3"
+    Concentration = "4"
+    Focus = "5"
 
 class ConsoleColors(Enum):
     Red   = "\033[1;31m"

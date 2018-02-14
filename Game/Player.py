@@ -2,11 +2,11 @@ from Game.Enums import *
 
 class Player:
 
-    def __init__(self, name, health, deck, energy):
+    def __init__(self, name, health, deck, energy_pool):
         self.name = name
         self.health = health
         self.deck = deck
-        self.energy = energy
+        self.energy_pool = energy_pool
         self.hand = []
         self.playerArea = {
             'Shields':[],
@@ -14,13 +14,15 @@ class Player:
             'DiscardPile': []
         }
 
-    def addEnergy(self, amount):
-        self.energy += amount
 
-    def substractEnergy(self, amount):
-        self.energy -= amount
-        if self.energy < 0:
-            self.energy = 0
+
+    def addToEnergyPool(self, amount):
+        self.energy_pool += amount
+
+    def substractFromEnergyPool(self, amount):
+        self.energy_pool -= amount
+        if self.energy_pool < 0:
+            self.energy_pool = 0
 
     def playCard(self, card):
         if card.type == CardType.Shield:

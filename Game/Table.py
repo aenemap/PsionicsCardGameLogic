@@ -18,13 +18,14 @@ class Table:
         currentPlayer = self.player1 if startPlayer == 1 else self.player2
         opposingPlayer = self.player2 if startPlayer == 1 else self.player1
         while(True):
-            # print(currentPlayer.name)
-            # print(opposingPlayer.name)
+            #Start Of Turn Effects
+
+            #Actions
             for action in range(1, self.actionsPerTurn + 1):
                 sys.stdout.write(ConsoleColors.LightPurple.value)
                 print('Player {0}, Action {1}'.format(startPlayer, action))
                 print('Health:', currentPlayer.health)
-                print('Energy:', currentPlayer.energy)
+                print('Energy:', currentPlayer.energy_pool)
                 sys.stdout.write(ConsoleColors.Reset.value)
                 sys.stdout.write(ConsoleColors.Cyan.value)
                 for action in TurnAction:
@@ -35,6 +36,8 @@ class Table:
                 print(type(action))
                 ActionResolver.resolveAction(action, currentPlayer, opposingPlayer)
                 self.printTable()
+
+            #End Of Turn Effects
 
             if startPlayer == 1:
                 startPlayer = 2
