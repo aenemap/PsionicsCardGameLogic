@@ -14,10 +14,31 @@ class CardSubType(Enum):
     Chaos = 'Chaos'
 
 class TurnAction(Enum):
-    Concentration = 'Concentration'
-    PlayEvent = 'PlayEvent'
-    InitiateAttack = 'InitiateAttack'
-    DrawCard = 'DrawCard'
-    DevelopTalent = 'DevelopTalent'
-    Focus = 'Focus'
-    CreateShield = 'CreateShield'
+    DrawCard = "1"
+    CreateShield = "2"
+    PlayEvent = "3"
+    DevelopTalent = "4"
+    InitiateAttack = "5"
+    Concentration = "6"
+    Focus = "7"
+
+class ConsoleColors(Enum):
+    Red   = "\033[1;31m"
+    Blue  = "\033[1;34m"
+    Cyan  = "\033[1;36m"
+    Green = "\033[0;32m"
+    Gray = "\033[0;37m]"
+    Black = "\033[0;30m"
+    Purple = "\033[0;35m"
+    Brown = "\033[0;33m"
+    DarkGray = "\033[1;30m"
+    LightBlue = "\033[1;34m"
+    LightGreen ="\033[1;32m"
+    LightCyan ="\033[1;36m"
+    LightRed = "\033[1;31m"
+    LightPurple = "\033[1;35m"
+    Yellow = "\033[1;33m"
+    White = "\033[1;37m"
+    Reset = "\033[0;0m"
+    Bold    = "\033[;1m"
+    Reverse = "\033[;7m"

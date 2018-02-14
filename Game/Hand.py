@@ -16,6 +16,19 @@ class Hand:
     def gethandSize(self):
         return self.hand.length
 
+    def getCardFromHand(self, cardid):
+        card = None
+        try:
+            card = list(filter(lambda x: x.id == int(cardid), self.hand))[0]
+        except:
+            pass
+
+        if card:
+            cardIndex = self.hand.index(card)
+            if cardIndex > -1:
+                card = self.hand.pop(cardIndex)
+        return card
+
     def printHand(self):
         for card in self.hand:
             Card.printCard(card)

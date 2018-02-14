@@ -8,12 +8,17 @@ class Card:
         self.energy_cost = energy_cost
 
     def printCard(card):
-        print('{0} - {1} - {2}'.format(card.id, card.name, card.type))
+        if isinstance(card, ShieldCard):
+            print('id:{0} - Name:{1} - EnergyCost:{2} - Consistency:{3}'.format(card.id,card.name, card.energy_cost, card.consistency_value))
+        elif isinstance(card, TalentCard):
+            print('id:{0} - Name:{1} - EnergyCost:{2} - Trash:{3}'.format(card.id, card.name, card.energy_cost, card.trash_value))
+        else:
+            print('{0} - {1} - {2}'.format(card.id, card.name, card.type))
 
 class ShieldCard(Card):
 
     def __init__(self, id, name, type, sub_type, energy_cost, consistency_value):
-        Card.__init__(self, id, name, type, energy_cost, sub_type)
+        Card.__init__(self, id, name, type, sub_type, energy_cost)
         self.consistency_value = consistency_value
 
 

@@ -1,4 +1,8 @@
 import random
+import sys
+from Game.Enums import *
+from Game.Card import Card
+from Game.ActionResolver import *
 
 class Table:
 
@@ -9,25 +13,37 @@ class Table:
 
     def startGame(self):
         startPlayer = random.randint(1,2)
-        currentPlayer = None
+
         print('Starting Player is Player Number {0}'.format(startPlayer))
-
-        if startPlayer == 1:
-            currentPlayer = self.player1
-        else:
-            currentPlayer = self.player2
-
+        currentPlayer = self.player1 if startPlayer == 1 else self.player2
+        opposingPlayer = self.player2 if startPlayer == 1 else self.player1
         while(True):
+            # print(currentPlayer.name)
+            # print(opposingPlayer.name)
             for action in range(1, self.actionsPerTurn + 1):
+                sys.stdout.write(ConsoleColors.LightPurple.value)
                 print('Player {0}, Action {1}'.format(startPlayer, action))
-                action = input('Action')
+                print('Health:', currentPlayer.health)
+                print('Energy:', currentPlayer.energy)
+                sys.stdout.write(ConsoleColors.Reset.value)
+                sys.stdout.write(ConsoleColors.Cyan.value)
+                for action in TurnAction:
+                    print('{0} - {1}'.format(action.value, action))
+                sys.stdout.write(ConsoleColors.Reset.value)
+                print('')
+                action = input('Select Action:')
+                print(type(action))
+                ActionResolver.resolveAction(action, currentPlayer, opposingPlayer)
+                self.printTable()
 
             if startPlayer == 1:
                 startPlayer = 2
                 currentPlayer = self.player2
+                opposingPlayer = self.player1
             else:
                 startPlayer = 1
                 currentPlayer = self.player1
+                opposingPlayer = self.player2
 
             self.player1.health -= 10
             print(self.player1.health)
@@ -38,44 +54,55 @@ class Table:
 
 
 
+
     def printTable(self):
 
         print('------------- Player2 play area ---------------')
-
         print('')
-        for card in self.player2.playerArea['DiscardPile']:
-            print(card.name)
         print('------------- Discard Pile ---------------- ')
-
+        for card in self.player2.playerArea['DiscardPile']:
+            Card.printCard(card)
         print('')
-        for card in self.player2.playerArea['Talents']:
-            print(card.name)
+        print('------------- Hand ---------------- ')
+        sys.stdout.write(ConsoleColors.LightGreen.value)
+        self.player2.hand.printHand()
+        sys.stdout.write(ConsoleColors.Reset.value)
+        print('')
         print('------------- Talents ---------------- ')
-
-
+        sys.stdout.write(ConsoleColors.Blue.value)
+        for card in self.player2.playerArea['Talents']:
+            Card.printCard(card)
+        sys.stdout.write(ConsoleColors.Reset.value)
         print('')
-        for card in self.player2.playerArea['Shields']:
-            print(card.name)
         print('------------- Shields ---------------- ')
-
-
+        sys.stdout.write(ConsoleColors.Red.value)
+        for card in self.player2.playerArea['Shields']:
+            Card.printCard(card)
+        sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('================================================================')
         print('')
-
-        print('------------- Shields ---------------- ')
+        sys.stdout.write(ConsoleColors.Red.value)
         for card in self.player1.playerArea['Shields']:
-            print(card.name)
-
+            Card.printCard(card)
+        sys.stdout.write(ConsoleColors.Reset.value)
+        print('')
+        print('------------- Shields ---------------- ')
+        sys.stdout.write(ConsoleColors.Blue.value)
+        for card in self.player1.playerArea['Talents']:
+            Card.printCard(card)
+        sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Talents ---------------- ')
-        for card in self.player1.playerArea['Talents']:
-            print(card.name)
-
+        print('')
+        sys.stdout.write(ConsoleColors.LightGreen.value)
+        self.player1.hand.printHand()
+        sys.stdout.write(ConsoleColors.Reset.value)
+        print('')
+        print('------------- Hand ---------------- ')
+        for card in self.player1.playerArea['DiscardPile']:
+            Card.printCard(card)
         print('')
         print('------------- Discard Pile ---------------- ')
-        for card in self.player1.playerArea['DiscardPile']:
-            print(card.name)
-
         print('')
         print('------------- Player1 play area ---------------')
