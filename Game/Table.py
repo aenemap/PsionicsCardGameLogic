@@ -4,7 +4,7 @@ from Game.Enums import *
 from Game.Card import Card
 from Game.ActionResolver import *
 
-class Table:
+class Table(object):
 
     def __init__(self, player1, player2):
         self.player1 = player1
@@ -33,7 +33,6 @@ class Table:
                 sys.stdout.write(ConsoleColors.Reset.value)
                 print('')
                 action = input('Select Action:')
-                print(type(action))
                 ActionResolver.resolveAction(action, currentPlayer, opposingPlayer)
                 self.printTable()
 
@@ -64,7 +63,7 @@ class Table:
         print('')
         print('------------- Discard Pile ---------------- ')
         for card in self.player2.playerArea['DiscardPile']:
-            Card.printCard(card)
+            card.printCard(card)
         print('')
         print('------------- Hand ---------------- ')
         sys.stdout.write(ConsoleColors.LightGreen.value)
@@ -74,26 +73,26 @@ class Table:
         print('------------- Talents ---------------- ')
         sys.stdout.write(ConsoleColors.Blue.value)
         for card in self.player2.playerArea['Talents']:
-            Card.printCard(card)
+            card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Shields ---------------- ')
         sys.stdout.write(ConsoleColors.Red.value)
         for card in self.player2.playerArea['Shields']:
-            Card.printCard(card)
+            card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('================================================================')
         print('')
         sys.stdout.write(ConsoleColors.Red.value)
         for card in self.player1.playerArea['Shields']:
-            Card.printCard(card)
+            card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Shields ---------------- ')
         sys.stdout.write(ConsoleColors.Blue.value)
         for card in self.player1.playerArea['Talents']:
-            Card.printCard(card)
+            card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Talents ---------------- ')
@@ -104,7 +103,7 @@ class Table:
         print('')
         print('------------- Hand ---------------- ')
         for card in self.player1.playerArea['DiscardPile']:
-            Card.printCard(card)
+            card.printCard(card)
         print('')
         print('------------- Discard Pile ---------------- ')
         print('')

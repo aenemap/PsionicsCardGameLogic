@@ -2,7 +2,7 @@ from random import shuffle
 from collections import deque
 from Game.Card import Card
 
-class Deck:
+class Deck(object):
 
     def __init__(self, deck_id, deck_name):
         self.deck_id = deck_id
@@ -26,4 +26,4 @@ class Deck:
 
     def printDeck(self):
         for card in self.deck:
-            Card.printCard(card);
+            card.printCard(card);

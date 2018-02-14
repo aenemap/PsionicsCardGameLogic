@@ -25,14 +25,14 @@ player1 = Player(
     name='John',
     health=30,
     deck=deck1,
-    energy=5
+    energy_pool=5
 )
 
 player2 = Player(
     name='Nick',
     health=30,
     deck=deck2,
-    energy=5
+    energy_pool=5
 )
 
 print('Player 1 Deck')

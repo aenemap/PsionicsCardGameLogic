@@ -1,6 +1,6 @@
 from Game.Card import Card
 
-class Hand:
+class Hand(object):
 
     def __init__(self, hand_size, max_hand_size):
         self.hand_size = hand_size
@@ -31,4 +31,4 @@ class Hand:
 
     def printHand(self):
         for card in self.hand:
-            Card.printCard(card)
+            card.printCard(card)
