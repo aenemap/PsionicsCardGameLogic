@@ -20,6 +20,11 @@ class TurnAction(Enum):
     Concentration = "4"
     Focus = "5"
 
+class PlayerArea(Enum):
+    Shields = "Shields"
+    Talents = "Talents"
+    DiscardPile = "DiscardPile"
+
 class ConsoleColors(Enum):
     Red   = "\033[1;31m"
     Blue  = "\033[1;34m"

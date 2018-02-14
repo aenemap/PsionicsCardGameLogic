@@ -9,9 +9,9 @@ class Player(object):
         self.energy_pool = energy_pool
         self.hand = []
         self.playerArea = {
-            'Shields':[],
-            'Talents':[],
-            'DiscardPile': []
+            PlayerArea.Shields.value:[],
+            PlayerArea.Talents.value:[],
+            PlayerArea.DiscardPile.value: []
         }
 
     def addToEnergyPool(self, amount):
@@ -29,6 +29,21 @@ class Player(object):
 
     def heal(amount):
         self.health += amount
+
+    def getCardFromPlayerArea(self, cardid, area):
+        card = None
+        for p_area in PlayerArea:
+            if p_area == area:
+                card = None
+                try:
+                    card = list(filter(lambda x: x.id == int(cardid), self.playerArea[p_area.value]))[0]
+                    break
+                except:
+                    break
+        return card
+
+
+
 
     def playCard(self, card):
         if card.type == CardType.Shield:

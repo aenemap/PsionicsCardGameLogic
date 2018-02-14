@@ -31,4 +31,9 @@ class Hand(object):
 
     def printHand(self):
         for card in self.hand:
-            card.printCard(card)
+            if card.isFaceDown:
+                card.isFaceDown = False
+                card.printCard(card)
+                card.isFaceDown = True
+            else:
+                card.printCard(card)

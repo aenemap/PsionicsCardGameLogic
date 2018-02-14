@@ -9,7 +9,8 @@ cardPool.append(ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
     energy_cost=2,
-    consistency_value=3))
+    consistency_value=3,
+    isFaceDown=True))
 
 cardPool.append(ShieldCard(
     id=random.randint(1, 100),
@@ -17,7 +18,8 @@ cardPool.append(ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Absorbing,
     energy_cost=2,
-    consistency_value=3))
+    consistency_value=3,
+    isFaceDown=True))
 
 cardPool.append(ShieldCard(
     id=random.randint(1, 100),
@@ -25,7 +27,8 @@ cardPool.append(ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
     energy_cost=2,
-    consistency_value=3))
+    consistency_value=3,
+    isFaceDown=True))
 
 cardPool.append(ShieldCard(
     id=random.randint(1, 100),
@@ -33,7 +36,8 @@ cardPool.append(ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Mirror,
     energy_cost=2,
-    consistency_value=3))
+    consistency_value=3,
+    isFaceDown=True))
 
 cardPool.append(TalentCard(
     id=random.randint(1, 100),
@@ -41,7 +45,8 @@ cardPool.append(TalentCard(
     type= CardType.Talent,
     sub_type= '',
     energy_cost=2,
-    trash_value=3))
+    trash_value=3,
+    isFaceDown=False))
 
 cardPool.append(TalentCard(
     id=random.randint(1, 100),
@@ -49,7 +54,8 @@ cardPool.append(TalentCard(
     type= CardType.Talent,
     sub_type= '',
     energy_cost=2,
-    trash_value=3))
+    trash_value=3,
+    isFaceDown=False))
 
 cardPool.append(TalentCard(
     id=random.randint(1, 100),
@@ -57,7 +63,8 @@ cardPool.append(TalentCard(
     type= CardType.Talent,
     sub_type= '',
     energy_cost=2,
-    trash_value=3))
+    trash_value=3,
+    isFaceDown=True))
 
 cardPool.append(TalentCard(
     id=random.randint(1, 100),
@@ -65,4 +72,5 @@ cardPool.append(TalentCard(
     type= CardType.Talent,
     sub_type= '',
     energy_cost=2,
-    trash_value=3))
+    trash_value=3,
+    isFaceDown=True))
