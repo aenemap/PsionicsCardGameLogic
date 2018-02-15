@@ -1,0 +1,5 @@
+[] Better script for the turns. Should allow to rearrange actions from mistakes etc..
+[] Code to load cards from excel
+[] Somehow to design an event system. Possibly function that will be appended in a deque and they will execute
+[] Find a way to handle abilities
+[] Start and end of turn effects

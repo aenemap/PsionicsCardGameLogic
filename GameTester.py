@@ -29,7 +29,7 @@ player1 = Player(
 )
 
 player2 = Player(
-    name='Nick',
+    name='George',
     health=30,
     deck=deck2,
     energy_pool=5
@@ -56,12 +56,5 @@ player2.hand = player2Hand
 # player2.hand.printHand()
 
 playTable = Table(player1=player1, player2=player2)
-
-
-# player1.playCard(list(filter(lambda x: x.type == CardType.Shield, player1.hand.getHand()))[0])
-# player2.playCard(list(filter(lambda x: x.type == CardType.Shield, player2.hand.getHand()))[0])
-
-
 playTable.printTable()
-
 playTable.startGame()

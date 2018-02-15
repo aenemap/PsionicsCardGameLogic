@@ -53,29 +53,44 @@
 # function = functions.popleft()
 # function()
 
-def ability1():
-    print('Resolving ability 1')
+# def ability1():
+#     print('Resolving ability 1')
+#
+# def ability2():
+#     print('Resolving ability 2')
+#
+# def ability3():
+#     print('Resolving ability 3')
+#
+# def ability4():
+#     print('Resolving ability 4')
+#
+# def ability5():
+#     print('Resolving ability 5')
+#
+# abbilitiesList = []
+# abbilitiesList.append({'priority': 2, 'ability': ability1})
+# abbilitiesList.append({'priority': 5, 'ability': ability2})
+# abbilitiesList.append({'priority': 1, 'ability': ability3})
+# abbilitiesList.append({'priority': 3, 'ability': ability4})
+# abbilitiesList.append({'priority': 4, 'ability': ability5})
+#
+# sortedAbilities = sorted(abbilitiesList, key=lambda k: k['priority'])
+#
+# for ab in sortedAbilities:
+#     ab['ability']()
 
-def ability2():
-    print('Resolving ability 2')
 
-def ability3():
-    print('Resolving ability 3')
+def abilityTest(player, amount):
+    print('the player {0} gains {1} health'.format(player, amount))
 
-def ability4():
-    print('Resolving ability 4')
+startOfTurnEffects = set()
 
-def ability5():
-    print('Resolving ability 5')
 
-abbilitiesList = []
-abbilitiesList.append({'priority': 2, 'ability': ability1})
-abbilitiesList.append({'priority': 5, 'ability': ability2})
-abbilitiesList.append({'priority': 1, 'ability': ability3})
-abbilitiesList.append({'priority': 3, 'ability': ability4})
-abbilitiesList.append({'priority': 4, 'ability': ability5})
 
-sortedAbilities = sorted(abbilitiesList, key=lambda k: k['priority'])
+startOfTurnEffect = abilityTest
 
-for ab in sortedAbilities:
-    ab['ability']()
+startOfTurnEffect.add(startOfTurnEffect)
+
+for startEffect in startOfTurnEffects:
+    startEffect()

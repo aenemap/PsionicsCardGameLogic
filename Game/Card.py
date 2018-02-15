@@ -7,6 +7,13 @@ class Card(object):
         self.sub_type = sub_type,
         self.energy_cost = energy_cost
 
+        self.startOfTurnEffect = None
+        self.startOfTurnEffectPriority = None
+        self.endOfTurnEffect = None
+        self.endOfTurnEffectPriority = None
+        self.cardAbility = None
+        self.cardAbilityPriority = None
+
     def printCard(self, card):
         self.printCard(card)
         # if isinstance(card, ShieldCard):
