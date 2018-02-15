@@ -90,7 +90,7 @@ startOfTurnEffects = set()
 
 startOfTurnEffect = abilityTest
 
-startOfTurnEffect.add(startOfTurnEffect)
+startOfTurnEffects.add(startOfTurnEffect)
 
 for startEffect in startOfTurnEffects:
-    startEffect()
+    startEffect('nick', '1')

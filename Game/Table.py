@@ -9,7 +9,7 @@ class Table(object):
     def __init__(self, player1, player2):
         self.player1 = player1
         self.player2 = player2
-        self.actionsPerTurn = 4
+
 
     def startGame(self):
         # startPlayer = random.randint(1,2)
@@ -23,7 +23,7 @@ class Table(object):
             #Start Of Turn Effects
 
             #Actions
-            for action in range(1, self.actionsPerTurn + 1):
+            for action in range(1, currentPlayer.actionsPerTurn + 1):
 
                 sys.stdout.write(ConsoleColors.LightPurple.value)
                 print('Player {0}, Action {1}'.format(startPlayer, action))

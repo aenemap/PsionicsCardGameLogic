@@ -7,6 +7,7 @@ class Player(object):
         self.health = health
         self.deck = deck
         self.energy_pool = energy_pool
+        self.actionsPerTurn = 4
         self.hand = []
         self.playerArea = {
             PlayerArea.Shields.value:[],
