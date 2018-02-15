@@ -12,21 +12,31 @@ class Table(object):
         self.actionsPerTurn = 4
 
     def startGame(self):
-        startPlayer = random.randint(1,2)
+        # startPlayer = random.randint(1,2)
+        startPlayer = 1
 
         print('Starting Player is Player Number {0}'.format(startPlayer))
         currentPlayer = self.player1 if startPlayer == 1 else self.player2
         opposingPlayer = self.player2 if startPlayer == 1 else self.player1
         while(True):
+            print('############################### Player {0} TURN ######################'.format(startPlayer))
             #Start Of Turn Effects
 
             #Actions
             for action in range(1, self.actionsPerTurn + 1):
+
                 sys.stdout.write(ConsoleColors.LightPurple.value)
                 print('Player {0}, Action {1}'.format(startPlayer, action))
                 print('Health:', currentPlayer.health)
                 print('Energy:', currentPlayer.energy_pool)
                 sys.stdout.write(ConsoleColors.Reset.value)
+
+                sys.stdout.write(ConsoleColors.Purple.value)
+                print('Opposing Player')
+                print('Health:', opposingPlayer.health)
+                print('Energy:', opposingPlayer.energy_pool)
+                sys.stdout.write(ConsoleColors.Reset.value)
+
                 sys.stdout.write(ConsoleColors.Cyan.value)
                 for action in TurnAction:
                     print('{0} - {1}'.format(action.value, action))
@@ -47,11 +57,11 @@ class Table(object):
                 currentPlayer = self.player1
                 opposingPlayer = self.player2
 
-            self.player1.health -= 10
-            print(self.player1.health)
-            if currentPlayer.health <= 0:
-                print('GAME OVER')
-                break
+            # self.player1.health -= 10
+            # print(self.player1.health)
+            # if currentPlayer.health <= 0:
+            #     print('GAME OVER')
+            #     break
 
 
 

@@ -23,6 +23,15 @@ class ShieldCard(Card):
         self.consistency_value = consistency_value
         self.isFaceDown = isFaceDown
 
+    def addConsistency(self, amount):
+        self.consistency_value += amount
+
+    def removeConsistency(self, amount):
+        self.consistency_value -= amount
+
+    def isCardFaceDown(self, value):
+        self.isFaceDown = value
+
     def printCard(self, card):
         if self.isFaceDown:
             print('id:{0} - Shield card face down'.format(card.id))
@@ -35,6 +44,9 @@ class TalentCard(Card):
         Card.__init__(self, id, name, type, sub_type, energy_cost)
         self.trash_value = trash_value
         self.isFaceDown = isFaceDown
+
+    def isCardFaceDown(self, value):
+        self.isFaceDown = value
 
     def printCard(self, card):
         if self.isFaceDown:

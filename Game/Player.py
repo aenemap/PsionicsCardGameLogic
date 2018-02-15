@@ -17,17 +17,17 @@ class Player(object):
     def addToEnergyPool(self, amount):
         self.energy_pool += amount
 
-    def substractFromEnergyPool(self, amount):
+    def removeFromEnergyPool(self, amount):
         self.energy_pool -= amount
         if self.energy_pool <= 0:
             self.energy_pool = 0
 
-    def takeDamage(amount):
+    def takeDamage(self, amount):
         self.health -= amount
         if self.health <= 0:
             self.health = 0
 
-    def heal(amount):
+    def heal(self, amount):
         self.health += amount
 
     def getCardFromPlayerArea(self, cardid, area):
@@ -41,6 +41,15 @@ class Player(object):
                 except:
                     break
         return card
+
+    def removeCardFromPlayerArea(self, cardid, area):
+        card = None
+        card = getCardFromPlayerArea(cardid, area)
+        if card:
+            cardIndex = self.playerArea[p_area.value].index(card)
+            if cardIndex > -1:
+                card = self.playerArea[p_area.value].pop(cardIndex)
+                self.playerArea[PlayerArea.DiscardPile].append(card)
 
 
 
