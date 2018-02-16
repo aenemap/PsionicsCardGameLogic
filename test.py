@@ -11,6 +11,7 @@
 # search.send("Dont you love me?")
 # search.send("I love coroutines instead")
 
+# from time import sleep
 
 # def turns(totalTurns):
 #     currentTurn = 1
@@ -22,6 +23,7 @@
 # while True:
 #     for action in turns(5):
 #         print('Action {0}'.format(action))
+
 
 # def func1():
 #     print('I am func1')
@@ -81,16 +83,105 @@
 #     ab['ability']()
 
 
-def abilityTest(player, amount):
-    print('the player {0} gains {1} health'.format(player, amount))
+# def abilityTest(player, amount):
+#     print('the player {0} gains {1} health'.format(player, amount))
+#
+# startOfTurnEffects = set()
+#
+#
+#
+# startOfTurnEffect = abilityTest
+#
+# startOfTurnEffects.add(startOfTurnEffect)
+#
+# for startEffect in startOfTurnEffects:
+#     startEffect('nick', '1')
 
-startOfTurnEffects = set()
+from Game.Player import Player
+
+class Card(object):
+
+    def __init__(self, id, name, type, sub_type, energy_cost):
+        self.id =id
+        self.name = name
+        self.type = type
+        self.sub_type = sub_type,
+        self.energy_cost = energy_cost
+
+        self.startOfTurnEffect = None
+        self.startOfTurnEffectPriority = None
+        self.endOfTurnEffect = None
+        self.endOfTurnEffectPriority = None
+        self.cardAbility = None
+        self.cardAbilityPriority = None
+
+    def printCard(self, card):
+        self.printCard(card)
+
+class TalentCard(Card):
+    def __init__(self, id, name, type, sub_type, energy_cost, trash_value, isFaceDown):
+        Card.__init__(self, id, name, type, sub_type, energy_cost)
+        self.trash_value = trash_value
+        self.isFaceDown = isFaceDown
+
+    def isCardFaceDown(self, value):
+        self.isFaceDown = value
+
+    def printCard(self, card):
+        if self.isFaceDown:
+            print('id:{0} - Talent card face down'.format(card.id))
+        else:
+            print('id:{0} - Name:{1} - EnergyCost:{2} - Trash:{3}'.format(card.id, card.name, card.energy_cost, card.trash_value))
 
 
+class Ability(object):
 
-startOfTurnEffect = abilityTest
+    def __init__(self, name, priority):
+        self.name = name
+        self.priority = priority
 
-startOfTurnEffects.add(startOfTurnEffect)
+    def invoke(self):
+        pass
 
-for startEffect in startOfTurnEffects:
-    startEffect('nick', '1')
+
+class GainHealthAtStartOfRound(Ability):
+
+    def __init__(self,name, priority, cardOwner, health_amount):
+        Ability.__init__(self, name, priority)
+        self.cardOwner = cardOwner
+        self.health_amount = health_amount
+
+    def invoke(self, currentPlayer):
+        if currentPlayer.name == cardOwner.name:
+            self.cardOwner.health += self.health_amount
+            print('current player health = ', self.cardOwner.health)
+        else:
+            print('not current player')
+
+newTalentCard = TalentCard(
+    id=random.randint(1, 100),
+    name='Talent5',
+    type= CardType.Talent,
+    sub_type= '',
+    energy_cost=2,
+    trash_value=3,
+    isFaceDown=False)
+newTalentCard.cardAbility = 
+
+
+cardOwner = Player(
+    name='John',
+    health=30,
+    deck=[],
+    energy_pool=5
+)
+
+otherPlayer = Player(
+    name='Nick',
+    health=30,
+    deck=[],
+    energy_pool=5
+)
+ability = GainHealthAtStartOfRound('gainHealthAtStartOfRound', 1, cardOwner, 1)
+ability.invoke(cardOwner)
+ability.invoke(otherPlayer)

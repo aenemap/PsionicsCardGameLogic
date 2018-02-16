@@ -24,16 +24,17 @@ deck2.shuffleDeck()
 player1 = Player(
     name='John',
     health=30,
-    deck=deck1,
     energy_pool=5
 )
-
+player1.addDeckToPlayer(deck1)
+player1.selectDeck(deck1)
 player2 = Player(
     name='George',
     health=30,
-    deck=deck2,
     energy_pool=5
 )
+player2.addDeckToPlayer(deck2)
+player2.selectDeck(deck2)
 
 print('Player 1 Deck')
 player1.deck.printDeck()
@@ -44,8 +45,8 @@ allHands = Hand(3,3)
 player1Hand = Hand(3,3)
 player2Hand = Hand(3,3)
 for x in range(0, allHands.hand_size):
-    player1Hand.addCardToHand(player1.deck.drawCardFromTopOfDeck())
-    player2Hand.addCardToHand(player2.deck.drawCardFromTopOfDeck())
+    player1Hand.addCardToHand(player1.deck.drawCardFromDeck(DrawCard.DrawFromTopOfDeck))
+    player2Hand.addCardToHand(player2.deck.drawCardFromDeck(DrawCard.DrawFromTopOfDeck))
 
 player1.hand = player1Hand
 player2.hand = player2Hand
