@@ -2,10 +2,11 @@ from Game.Enums import *
 
 class Player(object):
 
-    def __init__(self, name, health, deck, energy_pool):
+    def __init__(self, name, health, energy_pool):
         self.name = name
         self.health = health
-        self.deck = deck
+        self.decks = {}
+        self.deck = None
         self.energy_pool = energy_pool
         self.actionsPerTurn = 4
         self.hand = []
@@ -14,6 +15,12 @@ class Player(object):
             PlayerArea.Talents.value:[],
             PlayerArea.DiscardPile.value: []
         }
+
+    def addDeckToPlayer(self, deck):
+        self.decks[deck.deck_id] = deck
+
+    def selectDeck(self, deck):
+        self.deck = self.decks[deck.deck_id]
 
     def addToEnergyPool(self, amount):
         self.energy_pool += amount

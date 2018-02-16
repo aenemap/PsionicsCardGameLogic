@@ -25,6 +25,10 @@ class PlayerArea(Enum):
     Talents = "Talents"
     DiscardPile = "DiscardPile"
 
+class DrawCard(Enum):
+    DrawFromTopOfDeck = 'DrawFromTopOfDeck'
+    DrawFromBottomOfDeck = 'DrawFromBottomOfDeck'
+
 class ConsoleColors(Enum):
     Red   = "\033[1;31m"
     Blue  = "\033[1;34m"

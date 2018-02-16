@@ -11,7 +11,8 @@ class Hand(object):
         return self.hand
 
     def addCardToHand(self, card):
-        self.hand.append(card)
+        if card:
+            self.hand.append(card)
 
     def gethandSize(self):
         return self.hand.length

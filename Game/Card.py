@@ -16,12 +16,6 @@ class Card(object):
 
     def printCard(self, card):
         self.printCard(card)
-        # if isinstance(card, ShieldCard):
-        #     print('id:{0} - Name:{1} - EnergyCost:{2} - Consistency:{3}'.format(card.id,card.name, card.energy_cost, card.consistency_value))
-        # elif isinstance(card, TalentCard):
-        #     print('id:{0} - Name:{1} - EnergyCost:{2} - Trash:{3}'.format(card.id, card.name, card.energy_cost, card.trash_value))
-        # else:
-        #     print('{0} - {1} - {2}'.format(card.id, card.name, card.type))
 
 class ShieldCard(Card):
 

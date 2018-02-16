@@ -9,6 +9,10 @@ class Table(object):
     def __init__(self, player1, player2):
         self.player1 = player1
         self.player2 = player2
+        self.startOfTurnEffects = set()
+        self.endOfTurnEffects = set()
+        self.cardConditions = []
+
 
 
     def startGame(self):
@@ -19,8 +23,16 @@ class Table(object):
         currentPlayer = self.player1 if startPlayer == 1 else self.player2
         opposingPlayer = self.player2 if startPlayer == 1 else self.player1
         while(True):
+            sys.stdout.write(ConsoleColors.Brown.value)
             print('############################### Player {0} TURN ######################'.format(startPlayer))
+            sys.stdout.write(ConsoleColors.Reset.value)
             #Start Of Turn Effects
+            if len(self.startOfTurnEffects) > 0:
+                print('------------ Start Of Turn Effects --------------')
+                for effect in self.startOfTurnEffects:
+                    effect(currentPlayer, 1)
+                print('------------ Start Of Turn Effects Complete --------------')
+
 
             #Actions
             for action in range(1, currentPlayer.actionsPerTurn + 1):
@@ -43,7 +55,13 @@ class Table(object):
                 sys.stdout.write(ConsoleColors.Reset.value)
                 print('')
                 action = input('Select Action:')
-                ActionResolver.resolveAction(action, currentPlayer, opposingPlayer)
+                ActionResolver.resolveAction(
+                    action = action,
+                    currentPlayer=currentPlayer,
+                    opposingPlayer=opposingPlayer,
+                    startOfTurnEffects=self.startOfTurnEffects,
+                    endOfTurnEffects=self.endOfTurnEffects
+                    )
                 self.printTable()
 
             #End Of Turn Effects
