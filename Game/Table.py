@@ -55,6 +55,7 @@ class Table(object):
                 sys.stdout.write(ConsoleColors.Reset.value)
                 print('')
                 action = input('Select Action:')
+                # Check if the action can be executed , because of any card effect
                 ActionResolver.resolveAction(
                     action = action,
                     currentPlayer=currentPlayer,

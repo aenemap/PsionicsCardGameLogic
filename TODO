@@ -3,3 +3,10 @@
 [] Somehow to design an event system. Possibly function that will be appended in a deque and they will execute
 [] Find a way to handle abilities
 [] Start and end of turn effects
+
+
+Abilities
+- Abilities that trigger at a specific point in the turn (Start of turn , end of turn ...)
+- Abilities that triggers immediately when a card is played
+- Abilities that triggers every round till they are removed
+- Abilities that change the rules of the game
