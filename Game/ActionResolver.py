@@ -19,12 +19,11 @@ class ActionResolver(object):
                 currentPlayer.playCard(cardToPlay)
                 if cardToPlay.ability:
                     if cardToPlay.ability.abilityEffectType == AbilityEffectType.StartOfTurn:
-                        startOfTurnEffects.add(cardToPlay.ability)
-                # if cardToPlay.startOfTurnEffect:
-                #     print('The card has startOfTurnEffect')
-                #     startOfTurnEffects.add(cardToPlay.startOfTurnEffect)
-                # elif cardToPlay.endOfTurnEffect:
-                #     print('The card has endOfTurnEffect')
+                        startOfTurnEffects.append(cardToPlay.ability)
+                    elif cardToPlay.ability.abilityEffectType == AbilityEffectType.EndOfTurn:
+                        endOfTurnEffects.append(cardToPlay.ability)
+                    elif cardToPlay.ability.abilityEffectType == AbilityEffectType.Immediate:
+                        cardToPlay.ability.invoke(table)
             else:
                 print('Card with id {0} could not be found in Hand', cardIdToPlay)
         elif action == TurnAction.Concentration.value:

@@ -5,7 +5,8 @@ class Ability(object):
         self.priority = priority
         self.abilityEffectType = abilityEffectType
         self.argType = argType
-        self.abilityIsAttachedToCard = None
+        self.canStack = True
+        self.attachedCard = None
 
 
     def invoke():

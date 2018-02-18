@@ -86,6 +86,17 @@ newTalentCard = TalentCard(
     trash_value=3,
     isFaceDown=False)
 
-newTalentCard.ability = GainHealthAtStartOfRound()
-newTalentCard.ability.abilityIsAttachedToCard = newTalentCard
+newTalentCard.ability = GainHealthAtStartOfRound(newTalentCard, 2)
 cardPool.append(newTalentCard)
+
+energyGain = TalentCard(
+    id=random.randint(1, 100),
+    name='energyGain',
+    type= CardType.Talent,
+    sub_type= '',
+    energy_cost=2,
+    trash_value=3,
+    isFaceDown=False)
+
+energyGain.ability = GainEnergyAtStartOfRound(energyGain, 1)
+cardPool.append(energyGain)

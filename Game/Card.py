@@ -9,12 +9,6 @@ class Card(object):
         self.uniqueCardId = None
         self.ability = None
 
-        # self.startOfTurnEffect = None
-        # self.startOfTurnEffectPriority = None
-        # self.endOfTurnEffect = None
-        # self.endOfTurnEffectPriority = None
-        # self.cardAbility = None
-        # self.cardAbilityPriority = None
 
     def printCard(self, card):
         self.printCard(card)

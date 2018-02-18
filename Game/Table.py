@@ -11,9 +11,9 @@ class Table(object):
         self.player2 = player2
         self.currentPlayer = None
         self.opposingPlayer = None
-        self.startOfTurnEffects = set()
-        self.endOfTurnEffects = set()
-        self.permanentEffects = set()
+        self.startOfTurnEffects = []
+        self.endOfTurnEffects = []
+        self.permanentEffects = []
         self.actionsPerTurn = 4
 
 
@@ -32,7 +32,9 @@ class Table(object):
             #Start Of Turn Effects
             if len(self.startOfTurnEffects) > 0:
                 print('------------ Start Of Turn Effects --------------')
-                for effect in self.startOfTurnEffects:
+                sortedAbilities = sorted(self.startOfTurnEffects, key=lambda k: k.priority)
+                for effect in sortedAbilities:
+                    print('effect.priority', effect.priority)
                     if effect.argType == AbilityArgType.CardOwner:
                         effect.invoke(self.currentPlayer)
                 print('------------ Start Of Turn Effects Complete --------------')
@@ -73,6 +75,14 @@ class Table(object):
             #After each action check if any players health is at zero and end the game
 
             #End Of Turn Effects
+            if len(self.endOfTurnEffects) > 0:
+                print('------------ End Of Turn Effects --------------')
+                sortedAbilities = sorted(self.endOfTurnEffects, key=lambda k: k.priority)
+                for effect in sortedAbilities:
+                    print('effect.priority', effect.priority)
+                    if effect.argType == AbilityArgType.CardOwner:
+                        effect.invoke(self.currentPlayer)
+                print('------------ End Of Turn Effects Complete --------------')
 
             if startPlayer == 1:
                 startPlayer = 2
@@ -93,32 +103,38 @@ class Table(object):
         print('------------- Discard Pile ---------------- ')
         for card in self.player2.playerArea['DiscardPile']:
             card.printCard(card)
+        print('----------------------------------- ')
         print('')
         print('------------- Hand ---------------- ')
         sys.stdout.write(ConsoleColors.LightGreen.value)
         self.player2.hand.printHand()
         sys.stdout.write(ConsoleColors.Reset.value)
+        print('----------------------------------- ')
         print('')
         print('------------- Talents ---------------- ')
         sys.stdout.write(ConsoleColors.Blue.value)
         for card in self.player2.playerArea['Talents']:
             card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
+        print('----------------------------------- ')
         print('')
         print('------------- Shields ---------------- ')
         sys.stdout.write(ConsoleColors.Red.value)
         for card in self.player2.playerArea['Shields']:
             card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
+        print('----------------------------------- ')
         print('')
         print('================================================================')
         print('')
+        print('----------------------------------- ')
         sys.stdout.write(ConsoleColors.Red.value)
         for card in self.player1.playerArea['Shields']:
             card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Shields ---------------- ')
+        print('----------------------------------- ')
         sys.stdout.write(ConsoleColors.Blue.value)
         for card in self.player1.playerArea['Talents']:
             card.printCard(card)
@@ -126,11 +142,13 @@ class Table(object):
         print('')
         print('------------- Talents ---------------- ')
         print('')
+        print('----------------------------------- ')
         sys.stdout.write(ConsoleColors.LightGreen.value)
         self.player1.hand.printHand()
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Hand ---------------- ')
+        print('----------------------------------- ')
         for card in self.player1.playerArea['DiscardPile']:
             card.printCard(card)
         print('')
