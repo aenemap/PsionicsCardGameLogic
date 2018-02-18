@@ -23,7 +23,8 @@ class ActionResolver(object):
                     elif cardToPlay.ability.abilityEffectType == AbilityEffectType.EndOfTurn:
                         endOfTurnEffects.append(cardToPlay.ability)
                     elif cardToPlay.ability.abilityEffectType == AbilityEffectType.Immediate:
-                        cardToPlay.ability.invoke(table)
+                        if cardToPlay.ability.argType == AbilityArgType.CurrentPlayer:
+                            cardToPlay.ability.invoke(currentPlayer)
             else:
                 print('Card with id {0} could not be found in Hand', cardIdToPlay)
         elif action == TurnAction.Concentration.value:

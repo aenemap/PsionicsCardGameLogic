@@ -4,14 +4,17 @@ from Game.AbilityPool import *
 import uuid , random
 
 cardPool = []
-cardPool.append(ShieldCard(
+basicShield1 = ShieldCard(
     id=random.randint(1, 100),
     name='Shield1',
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
     energy_cost=random.randint(1, 5),
     consistency_value=random.randint(1, 3),
-    isFaceDown=True))
+    isFaceDown=True)
+
+basicShield1.ability = DrawCardOnPlay(basicShield1, 1)
+cardPool.append(basicShield1)
 
 cardPool.append(ShieldCard(
     id=random.randint(1, 100),

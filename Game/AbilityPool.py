@@ -42,3 +42,15 @@ class GainEnergyAtStartOfRound(Ability):
                 playerHasCard = len(list(filter(lambda x: x.uniqueCardId == self.attachedCard.uniqueCardId, playerArea)))
                 if playerHasCard > 0:
                     player.energy_pool += self.amount
+
+class DrawCardOnPlay(Ability):
+
+    def __init__(self, attachedCard, howManyCards):
+        Ability.__init__(self, 'DrawCardOnPlay', 10, AbilityEffectType.Immediate, AbilityArgType.CurrentPlayer)
+        self.attachedCard = attachedCard
+        self.howManyCards = howManyCards
+
+    def invoke(self, player):
+        if player:
+            for c in range(0, self.howManyCards):
+                player.hand.addCardToHand(player.deck.drawCardFromDeck(DrawCard.DrawFromTopOfDeck))
