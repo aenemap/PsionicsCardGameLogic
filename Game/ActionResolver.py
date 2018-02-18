@@ -1,9 +1,10 @@
 from Game.Enums import *
+from Game.Ability import Ability
 
 class ActionResolver(object):
 
     @staticmethod
-    def resolveAction(action, currentPlayer, opposingPlayer, startOfTurnEffects, endOfTurnEffects):
+    def resolveAction(table, action, currentPlayer, opposingPlayer, startOfTurnEffects, endOfTurnEffects):
         if action == TurnAction.DrawCard.value:
             #Draw the top card from the deck to players hand
             print('Player {0} choosed the {1} action'.format(currentPlayer.name, TurnAction.DrawCard))
@@ -16,11 +17,14 @@ class ActionResolver(object):
             if cardToPlay:
                 currentPlayer.removeFromEnergyPool(cardToPlay.energy_cost)
                 currentPlayer.playCard(cardToPlay)
-                if cardToPlay.startOfTurnEffect:
-                    print('The card has startOfTurnEffect')
-                    startOfTurnEffects.add(cardToPlay.startOfTurnEffect)
-                elif cardToPlay.endOfTurnEffect:
-                    print('The card has endOfTurnEffect')
+                if cardToPlay.ability:
+                    if cardToPlay.ability.abilityEffectType == AbilityEffectType.StartOfTurn:
+                        startOfTurnEffects.add(cardToPlay.ability)
+                # if cardToPlay.startOfTurnEffect:
+                #     print('The card has startOfTurnEffect')
+                #     startOfTurnEffects.add(cardToPlay.startOfTurnEffect)
+                # elif cardToPlay.endOfTurnEffect:
+                #     print('The card has endOfTurnEffect')
             else:
                 print('Card with id {0} could not be found in Hand', cardIdToPlay)
         elif action == TurnAction.Concentration.value:

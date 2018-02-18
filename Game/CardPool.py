@@ -85,5 +85,7 @@ newTalentCard = TalentCard(
     energy_cost=2,
     trash_value=3,
     isFaceDown=False)
-newTalentCard.startOfTurnEffect = gainHealthAtStartOfRound
+
+newTalentCard.ability = GainHealthAtStartOfRound()
+newTalentCard.ability.abilityIsAttachedToCard = newTalentCard
 cardPool.append(newTalentCard)

@@ -9,9 +9,12 @@ class Table(object):
     def __init__(self, player1, player2):
         self.player1 = player1
         self.player2 = player2
+        self.currentPlayer = None
+        self.opposingPlayer = None
         self.startOfTurnEffects = set()
         self.endOfTurnEffects = set()
-        self.cardConditions = []
+        self.permanentEffects = set()
+        self.actionsPerTurn = 4
 
 
 
@@ -20,8 +23,8 @@ class Table(object):
         startPlayer = 1
 
         print('Starting Player is Player Number {0}'.format(startPlayer))
-        currentPlayer = self.player1 if startPlayer == 1 else self.player2
-        opposingPlayer = self.player2 if startPlayer == 1 else self.player1
+        self.currentPlayer = self.player1 if startPlayer == 1 else self.player2
+        self.opposingPlayer = self.player2 if startPlayer == 1 else self.player1
         while(True):
             sys.stdout.write(ConsoleColors.Brown.value)
             print('############################### Player {0} TURN ######################'.format(startPlayer))
@@ -30,23 +33,24 @@ class Table(object):
             if len(self.startOfTurnEffects) > 0:
                 print('------------ Start Of Turn Effects --------------')
                 for effect in self.startOfTurnEffects:
-                    effect(currentPlayer, 1)
+                    if effect.argType == AbilityArgType.CardOwner:
+                        effect.invoke(self.currentPlayer)
                 print('------------ Start Of Turn Effects Complete --------------')
 
 
             #Actions
-            for action in range(1, currentPlayer.actionsPerTurn + 1):
+            for action in range(1, self.currentPlayer.actionsPerTurn + 1):
 
                 sys.stdout.write(ConsoleColors.LightPurple.value)
                 print('Player {0}, Action {1}'.format(startPlayer, action))
-                print('Health:', currentPlayer.health)
-                print('Energy:', currentPlayer.energy_pool)
+                print('Health:', self.currentPlayer.health)
+                print('Energy:', self.currentPlayer.energy_pool)
                 sys.stdout.write(ConsoleColors.Reset.value)
 
                 sys.stdout.write(ConsoleColors.Purple.value)
                 print('Opposing Player')
-                print('Health:', opposingPlayer.health)
-                print('Energy:', opposingPlayer.energy_pool)
+                print('Health:', self.opposingPlayer.health)
+                print('Energy:', self.opposingPlayer.energy_pool)
                 sys.stdout.write(ConsoleColors.Reset.value)
 
                 sys.stdout.write(ConsoleColors.Cyan.value)
@@ -57,31 +61,27 @@ class Table(object):
                 action = input('Select Action:')
                 # Check if the action can be executed , because of any card effect
                 ActionResolver.resolveAction(
+                    table = self,
                     action = action,
-                    currentPlayer=currentPlayer,
-                    opposingPlayer=opposingPlayer,
+                    currentPlayer=self.currentPlayer,
+                    opposingPlayer=self.opposingPlayer,
                     startOfTurnEffects=self.startOfTurnEffects,
                     endOfTurnEffects=self.endOfTurnEffects
                     )
                 self.printTable()
 
+            #After each action check if any players health is at zero and end the game
+
             #End Of Turn Effects
 
             if startPlayer == 1:
                 startPlayer = 2
-                currentPlayer = self.player2
-                opposingPlayer = self.player1
+                self.currentPlayer = self.player2
+                self.opposingPlayer = self.player1
             else:
                 startPlayer = 1
-                currentPlayer = self.player1
-                opposingPlayer = self.player2
-
-            # self.player1.health -= 10
-            # print(self.player1.health)
-            # if currentPlayer.health <= 0:
-            #     print('GAME OVER')
-            #     break
-
+                self.currentPlayer = self.player1
+                self.opposingPlayer = self.player2
 
 
 

@@ -29,6 +29,18 @@ class DrawCard(Enum):
     DrawFromTopOfDeck = 'DrawFromTopOfDeck'
     DrawFromBottomOfDeck = 'DrawFromBottomOfDeck'
 
+class AbilityEffectType(Enum):
+    StartOfTurn = 'StartOfTurn'
+    EndOfTurn = 'EndOfTurn'
+    Immediate = 'Immediate'
+
+class AbilityArgType(Enum):
+    CardOwner = 'CardOwner'
+    CurrentPlayer = 'CurrentPlayer'
+    OpposingPlayer = 'OpposingPlayer'
+    BothPlayers = 'BothPlayers'
+    Table = 'Table'
+
 class ConsoleColors(Enum):
     Red   = "\033[1;31m"
     Blue  = "\033[1;34m"
