@@ -89,7 +89,7 @@ newTalentCard = TalentCard(
     trash_value=3,
     isFaceDown=False)
 
-newTalentCard.ability = GainHealthAtStartOfRound(newTalentCard, 2)
+newTalentCard.ability = GainHealthAtStartOfRound(newTalentCard, 1)
 cardPool.append(newTalentCard)
 
 energyGain = TalentCard(
