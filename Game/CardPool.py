@@ -83,3 +83,15 @@ ivory = ShieldCard(
 ivory.defence_value = 2
 ivory.ability = IvoryAbility(ivory)
 cardPool.append(ivory)
+
+echo = TalentCard(
+    id=0,
+    name='Echo',
+    type= CardType.Talent,
+    sub_type=None,
+    energy_cost= 2,
+    trash_value=3
+    isFaceDown=True
+)
+echo.ability = GainEnergyAtStartOfRound(echo, 1)
+cardPool.append(echo)
