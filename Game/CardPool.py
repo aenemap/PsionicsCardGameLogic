@@ -59,3 +59,15 @@ nightbane = ShieldCard(
     isFaceDown=True)
 nightbane.ability = NightBaneAbility(nightbane)
 cardPool.append(nightbane)
+
+testCard = ShieldCard(
+    id=0,
+    name='TestCard',
+    type= CardType.Shield,
+    sub_type=CardSubType.Basic,
+    energy_cost= 2,
+    defence_value=3,
+    consistency_value= 2,
+    isFaceDown=True)
+testCard.ability = GainHealthAtStartOfRound(testCard, 1)
+cardPool.append(testCard)

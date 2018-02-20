@@ -33,19 +33,19 @@ class Ability(object):
             args = abilityArgs
         else:
             abilityArgs = None
-            if abilityArg == AbilityArgType.Card:
+            if card.ability.abilityArgType == AbilityArgType.Card:
                 abilityArgs = card
-            elif abilityArg == AbilityArgType.CurrentPlayer:
+            elif card.ability.abilityArgType == AbilityArgType.CurrentPlayer:
                 abilityArgs = currentPlayer
-            elif abilityArg == AbilityArgType.OpposingPlayer:
+            elif card.ability.abilityArgType == AbilityArgType.OpposingPlayer:
                 abilityArgs = opposingPlayer
-            elif abilityArg == AbilityArgType.CardOwner:
+            elif card.ability.abilityArgType == AbilityArgType.CardOwner:
                 abilityArgs = currentPlayer
-            elif abilityArg == AbilityArgType.BothPlayers:
+            elif card.ability.abilityArgType == AbilityArgType.BothPlayers:
                 abilityArgs = []
                 abilityArgs.append(currentPlayer)
                 abilityArgs.append(opposingPlayer)
-            elif abilityArg == AbilityArgType.Table:
+            elif card.ability.abilityArgType == AbilityArgType.Table:
                 abilityArgs = table
 
             args = abilityArgs

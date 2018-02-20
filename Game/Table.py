@@ -34,9 +34,12 @@ class Table(object):
                 print('------------ Start Of Turn Effects --------------')
                 sortedAbilities = sorted(self.startOfTurnEffects, key=lambda k: k.priority)
                 for effect in sortedAbilities:
-                    print('effect.priority', effect.priority)
-                    if effect.abilityArgType == AbilityArgType.CardOwner:
-                        effect.invoke(self.currentPlayer)
+                    abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard)
+                    print(abilityArgs)
+                    if isinstance(abilityArgs, list):
+                        effect.invoke(*abilityArgs)
+                    else:
+                        effect.invoke(abilityArgs)
                 print('------------ Start Of Turn Effects Complete --------------')
 
 
@@ -73,18 +76,20 @@ class Table(object):
                 self.printTable()
 
             #After each action check if any players health is at zero and end the game
-            if currentPlayer.health <= 0 or opposingPlayer.health <= 0:
+            if self.currentPlayer.health <= 0 or self.opposingPlayer.health <= 0:
                 print('GAME OVER')
-                print('PLAYER {0} WINS'.format(currentPlayer.name if currentPlayer.health <= 0 else opposingPlayer.name))
+                print('PLAYER {0} WINS'.format(self.currentPlayer.name if self.currentPlayer.health <= 0 else self.opposingPlayer.name))
 
             #End Of Turn Effects
             if len(self.endOfTurnEffects) > 0:
                 print('------------ End Of Turn Effects --------------')
                 sortedAbilities = sorted(self.endOfTurnEffects, key=lambda k: k.priority)
                 for effect in sortedAbilities:
-                    print('effect.priority', effect.priority)
-                    if effect.abilityArgType == AbilityArgType.CardOwner:
-                        effect.invoke(self.currentPlayer)
+                    abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard)
+                    if isinstance(abilityArgs, list):
+                        effect.invoke(*abilityArgs)
+                    else:
+                        effect.invoke(abilityArgs)
                 print('------------ End Of Turn Effects Complete --------------')
 
             if startPlayer == 1:
