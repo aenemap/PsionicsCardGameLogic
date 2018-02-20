@@ -32,12 +32,12 @@ class ShieldCard(Card):
 
     def printCard(self, card):
         if self.isFaceDown:
-            print('id:{0} - Shield card face down'.format(card.id))
+            print('id:{0} - Shield card face down - uniqueCardId:{1}'.format(card.id, card.uniqueCardId))
         else:
             abilityDescription = ''
             if card.ability:
                 abilityDescription = card.ability.abilityDescription
-            print('id:{0} - Name:{1} - EnergyCost:{2} - Consistency:{3} - Ability:{4}'.format(card.id,card.name, card.energy_cost, card.consistency_value, abilityDescription))
+            print('id:{0} - Name:{1} - EnergyCost:{2} - Consistency:{3} - Ability:{4} - uniqueCardId:{5}'.format(card.id,card.name, card.energy_cost, card.consistency_value, abilityDescription, card.uniqueCardId))
 
 
 class TalentCard(Card):

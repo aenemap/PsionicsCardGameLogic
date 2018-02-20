@@ -30,15 +30,16 @@ class Table(object):
             print('############################### Player {0} TURN ######################'.format(startPlayer))
             sys.stdout.write(ConsoleColors.Reset.value)
             #Start Of Turn Effects
+            print('length of startOfTurnEffects => ', len(self.startOfTurnEffects))
             if len(self.startOfTurnEffects) > 0:
                 print('------------ Start Of Turn Effects --------------')
                 sortedAbilities = sorted(self.startOfTurnEffects, key=lambda k: k.priority)
                 for effect in sortedAbilities:
                     abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard)
-                    print(abilityArgs)
                     if isinstance(abilityArgs, list):
                         effect.invoke(*abilityArgs)
                     else:
+                        print('i am on else')
                         effect.invoke(abilityArgs)
                 print('------------ Start Of Turn Effects Complete --------------')
 

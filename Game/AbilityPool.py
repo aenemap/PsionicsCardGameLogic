@@ -10,13 +10,15 @@ class GainHealthAtStartOfRound(Ability):
 
     def invoke(self, player):
         if player:
+            print(self.attachedCard)
             playerArea = player.getPlayerArea(self.attachedCard)
             # print('Player Area => ', playerArea)
             if playerArea:
                 # print('Card uniqueCardId => ', self.attachedCard.uniqueCardId)
                 playerHasCard = len(list(filter(lambda x: x.uniqueCardId == self.attachedCard.uniqueCardId, playerArea)))
                 if playerHasCard > 0:
-                    player.health += self.amount
+                    if not self.attachedCard.isFaceDown:
+                        player.health += self.amount
 
 class GainEnergyAtStartOfRound(Ability):
 
@@ -33,7 +35,8 @@ class GainEnergyAtStartOfRound(Ability):
                 # print('Card uniqueCardId => ', self.attachedCard.uniqueCardId)
                 playerHasCard = len(list(filter(lambda x: x.uniqueCardId == self.attachedCard.uniqueCardId, playerArea)))
                 if playerHasCard > 0:
-                    player.energy_pool += self.amount
+                    if not self.attachedCard.isFaceDown:
+                        player.energy_pool += self.amount
 
 class DrawCardOnPlay(Ability):
 

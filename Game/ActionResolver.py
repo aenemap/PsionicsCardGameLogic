@@ -18,6 +18,7 @@ class ActionResolver(object):
                 currentPlayer.removeFromEnergyPool(cardToPlay.energy_cost)
                 currentPlayer.playCard(cardToPlay)
                 if cardToPlay.ability:
+                    cardToPlay.ability.attachedCard = cardToPlay
                     if cardToPlay.ability.abilityEffectType == AbilityEffectType.StartOfTurn:
                         startOfTurnEffects.append(cardToPlay.ability)
                     elif cardToPlay.ability.abilityEffectType == AbilityEffectType.EndOfTurn:
