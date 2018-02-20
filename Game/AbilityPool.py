@@ -1,5 +1,6 @@
 from Game.Ability import Ability
 from Game.Enums import *
+import math
 
 class GainHealthAtStartOfRound(Ability):
 
@@ -66,3 +67,18 @@ class NightBaneAbility(Ability):
                 player.removeFromEnergyPool(energy_amount)
                 card.energy_cost = energy_amount
                 card.consistency_value = energy_amount
+
+class IvoryAbility(Ability):
+
+    def __init__(self, attachedCard):
+        description = 'You may reflect half the energy to a minimum of 1 directly to your opponent'
+        abilityArgs = [AbilityArgType.CurrentPlayer, AbilityArgType.AttackValue]
+        Ability.__init__(self, 'IvoryAbility', description, 1, AbilityEffectType.WhenAttacked, abilityArgs, attachedCard)
+
+    def invoke(self, player, attack_value):
+        if player:
+            damage_amount = math.floor(attack_value / 2)
+            if damage_amount <= 0:
+                damage_amount = 1
+            print('Damage Reflected from Ivory: ', damage_amount)
+            player.health -= damage_amount

@@ -51,9 +51,9 @@ player1.deck.printDeck()
 print('Player 2 Deck')
 player2.deck.printDeck()
 
-allHands = Hand(3,3)
-player1Hand = Hand(3,3)
-player2Hand = Hand(3,3)
+allHands = Hand(5,5)
+player1Hand = Hand(5,5)
+player2Hand = Hand(5,5)
 for x in range(0, allHands.hand_size):
     player1Hand.addCardToHand(player1.deck.drawCardFromDeck(DrawCard.DrawFromTopOfDeck))
     player2Hand.addCardToHand(player2.deck.drawCardFromDeck(DrawCard.DrawFromTopOfDeck))

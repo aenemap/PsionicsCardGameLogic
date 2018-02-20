@@ -10,9 +10,9 @@ oblivion = ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
     energy_cost= 3,
-    defence_value=2,
     consistency_value= 3,
     isFaceDown=True)
+oblivion.defence_value = 2
 cardPool.append(oblivion)
 
 barrage = ShieldCard(
@@ -21,9 +21,9 @@ barrage = ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
     energy_cost= 2,
-    defence_value=1,
     consistency_value= 2,
     isFaceDown=True)
+barrage.defence_value=1
 cardPool.append(barrage)
 
 colossus = ShieldCard(
@@ -32,9 +32,9 @@ colossus = ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
     energy_cost= 4,
-    defence_value=3,
     consistency_value= 3,
     isFaceDown=True)
+colossus.defence_value=3
 cardPool.append(colossus)
 
 doomWall = ShieldCard(
@@ -43,9 +43,9 @@ doomWall = ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
     energy_cost= 3,
-    defence_value=3,
     consistency_value= 2,
     isFaceDown=True)
+doomWall.defence_value=3
 cardPool.append(doomWall)
 
 nightbane = ShieldCard(
@@ -54,20 +54,32 @@ nightbane = ShieldCard(
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
     energy_cost= 0,
-    defence_value=3,
     consistency_value= 0,
     isFaceDown=True)
+nightbane.defence_value=3
 nightbane.ability = NightBaneAbility(nightbane)
 cardPool.append(nightbane)
 
-testCard = ShieldCard(
+behemoth = ShieldCard(
     id=0,
-    name='TestCard',
+    name='Behemoth',
     type= CardType.Shield,
-    sub_type=CardSubType.Basic,
-    energy_cost= 2,
-    defence_value=3,
-    consistency_value= 2,
+    sub_type=CardSubType.Absorbing,
+    energy_cost= 4,
+    consistency_value= 0,
     isFaceDown=True)
-testCard.ability = GainHealthAtStartOfRound(testCard, 1)
-cardPool.append(testCard)
+behemoth.absorbing_value = 3
+behemoth.ability = None
+cardPool.append(behemoth)
+
+ivory = ShieldCard(
+    id=0,
+    name='Ivory',
+    type= CardType.Shield,
+    sub_type=CardSubType.Mirror,
+    energy_cost= 4,
+    consistency_value= 3,
+    isFaceDown=True)
+ivory.defence_value = 2
+ivory.ability = IvoryAbility(ivory)
+cardPool.append(ivory)

@@ -15,11 +15,13 @@ class Card(object):
 
 class ShieldCard(Card):
 
-    def __init__(self, id, name, type, sub_type, energy_cost, defence_value, consistency_value, isFaceDown):
+    def __init__(self, id, name, type, sub_type, energy_cost, consistency_value, isFaceDown):
         Card.__init__(self, id, name, type, sub_type, energy_cost)
         self.consistency_value = consistency_value
-        self.defence_value = defence_value
         self.isFaceDown = isFaceDown
+        self.defence_value = None
+        self.absorbing_value = None
+
 
     def addConsistency(self, amount):
         self.consistency_value += amount
@@ -32,12 +34,12 @@ class ShieldCard(Card):
 
     def printCard(self, card):
         if self.isFaceDown:
-            print('id:{0} - Shield card face down - uniqueCardId:{1}'.format(card.id, card.uniqueCardId))
+            print('id:{0} - Shield card face down'.format(card.id))
         else:
             abilityDescription = ''
             if card.ability:
                 abilityDescription = card.ability.abilityDescription
-            print('id:{0} - Name:{1} - EnergyCost:{2} - Consistency:{3} - Ability:{4} - uniqueCardId:{5}'.format(card.id,card.name, card.energy_cost, card.consistency_value, abilityDescription, card.uniqueCardId))
+            print('id:{0} - Name:{1} - EnergyCost:{2} - Consistency:{3} - Ability:{4}'.format(card.id,card.name, card.energy_cost, card.consistency_value, abilityDescription))
 
 
 class TalentCard(Card):

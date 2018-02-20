@@ -11,7 +11,7 @@ class Ability(object):
         self.attachedCard = attachedCard
         self.canStack = True
 
-    def getArgsForAbility(self, table, currentPlayer, opposingPlayer, card):
+    def getArgsForAbility(self, table, currentPlayer, opposingPlayer, card, attack_value):
         args = None
         if isinstance(card.ability.abilityArgType, list):
             abilityArgs = []
@@ -29,6 +29,8 @@ class Ability(object):
                     abilityArgs.append(opposingPlayer)
                 elif abilityArg == AbilityArgType.Table:
                     abilityArgs.append(table)
+                elif abilityArg == AbilityArgType.AttackValue:
+                    abilityArgs.append(attack_value)
 
             args = abilityArgs
         else:
@@ -47,6 +49,8 @@ class Ability(object):
                 abilityArgs.append(opposingPlayer)
             elif card.ability.abilityArgType == AbilityArgType.Table:
                 abilityArgs = table
+            elif card.ability.abilityArgType == AbilityArgType.AttackValue:
+                abilityArg = attack_value
 
             args = abilityArgs
 

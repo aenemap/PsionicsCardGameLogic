@@ -35,7 +35,7 @@ class Table(object):
                 print('------------ Start Of Turn Effects --------------')
                 sortedAbilities = sorted(self.startOfTurnEffects, key=lambda k: k.priority)
                 for effect in sortedAbilities:
-                    abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard)
+                    abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard, None)
                     if isinstance(abilityArgs, list):
                         effect.invoke(*abilityArgs)
                     else:
@@ -86,7 +86,7 @@ class Table(object):
                 print('------------ End Of Turn Effects --------------')
                 sortedAbilities = sorted(self.endOfTurnEffects, key=lambda k: k.priority)
                 for effect in sortedAbilities:
-                    abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard)
+                    abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard, None)
                     if isinstance(abilityArgs, list):
                         effect.invoke(*abilityArgs)
                     else:

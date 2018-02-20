@@ -36,6 +36,7 @@ class AbilityEffectType(Enum):
     Permanent = 'Permanent'
     BeforeLoadShield = 'BeforeLoadShield'
     AfterLoadShield = 'AfterLoadShield'
+    WhenAttacked = 'WhenAttacked'
 
 class AbilityArgType(Enum):
     CardOwner = 'CardOwner'
@@ -44,6 +45,7 @@ class AbilityArgType(Enum):
     BothPlayers = 'BothPlayers'
     Table = 'Table'
     Card = 'Card'
+    AttackValue = 'AttackValue'
 
 class ConsoleColors(Enum):
     Red   = "\033[1;31m"

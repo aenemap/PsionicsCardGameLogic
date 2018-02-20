@@ -15,7 +15,8 @@ class ActionResolver(object):
             cardIdToPlay = int(cardIdToPlay)
             cardToPlay = currentPlayer.hand.getCardFromHand(cardIdToPlay)
             if cardToPlay:
-                currentPlayer.removeFromEnergyPool(cardToPlay.energy_cost)
+                if not cardToPlay.isFaceDown:
+                    currentPlayer.removeFromEnergyPool(cardToPlay.energy_cost)
                 currentPlayer.playCard(cardToPlay)
                 if cardToPlay.ability:
                     cardToPlay.ability.attachedCard = cardToPlay
@@ -57,28 +58,39 @@ class ActionResolver(object):
             shieldToAttack = input("Choose a shield to attack (id):")
             shieldToAttack = int(shieldToAttack)
             shield = opposingPlayer.getCardFromPlayerArea(shieldToAttack, PlayerArea.Shields)
+            # substractFromAttackValue = None
+            # if shield.sub_type == CardSubType.
             if shield.isFaceDown:
                 # if the shield is face down the opposing players desides to load it or not if he has the energy
-                if shield.energy_cost < opposingPlayer.energy_pool:
+                if shield.energy_cost <= opposingPlayer.energy_pool:
                     opponentLoadsShield = input('Does opponents loads the shield?(yes/no):')
                     if (opponentLoadsShield == 'yes'):
                         opposingPlayer.removeFromEnergyPool(shield.energy_cost)
                         if shield.ability:
                             if shield.ability.abilityEffectType == AbilityEffectType.BeforeLoadShield:
-                                abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield)
+                                abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield, attack_value)
                                 if isinstance(abilityArgs, list):
                                     shield.ability.invoke(*abilityArgs)
                                 else:
                                     shield.invoke(abilityArgs)
                         shield.isCardFaceDown(False)
+                        # After Load Shield Abilities
                         if shield.ability:
                             if shield.ability.abilityEffectType == AbilityEffectType.AfterLoadShield:
-                                abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield)
+                                abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield, attack_value)
                                 if isinstance(abilityArgs, list):
                                     shield.ability.invoke(*abilityArgs)
                                 else:
                                     shield.invoke(abilityArgs)
                         if attack_value >= shield.defence_value:
+                            # WhenAttacked Abilities
+                            if shield.ability:
+                                if shield.ability.abilityEffectType == AbilityEffectType.WhenAttacked:
+                                    abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield, attack_value)
+                                    if isinstance(abilityArgs, list):
+                                        shield.ability.invoke(*abilityArgs)
+                                    else:
+                                        shield.ability.invoke(abilityArgs)
                             attack_value -= shield.defence_value
                             shield.removeConsistency(1)
                             if shield.consistency_value <=0:
