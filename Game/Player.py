@@ -50,9 +50,15 @@ class Player(object):
                     break
         return card
 
+    def getPlayerArea(self, card):
+        if card.type == CardType.Shield:
+            return self.playerArea[PlayerArea.Shields.value]
+        elif card.type == CardType.Talent:
+            return self.playerArea[PlayerArea.Talents.value]
+
     def removeCardFromPlayerArea(self, cardid, area):
         card = None
-        card = getCardFromPlayerArea(cardid, area)
+        card = self.getCardFromPlayerArea(cardid, area)
         if card:
             cardIndex = self.playerArea[p_area.value].index(card)
             if cardIndex > -1:

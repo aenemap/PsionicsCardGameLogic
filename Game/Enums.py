@@ -33,6 +33,9 @@ class AbilityEffectType(Enum):
     StartOfTurn = 'StartOfTurn'
     EndOfTurn = 'EndOfTurn'
     Immediate = 'Immediate'
+    Permanent = 'Permanent'
+    BeforeLoad = 'BeforeLoad'
+    AfterLoad = 'AfteLoad'
 
 class AbilityArgType(Enum):
     CardOwner = 'CardOwner'
@@ -40,6 +43,7 @@ class AbilityArgType(Enum):
     OpposingPlayer = 'OpposingPlayer'
     BothPlayers = 'BothPlayers'
     Table = 'Table'
+    Card = 'Card'
 
 class ConsoleColors(Enum):
     Red   = "\033[1;31m"

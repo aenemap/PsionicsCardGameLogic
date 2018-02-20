@@ -2,7 +2,7 @@ from random import shuffle
 from collections import deque
 from Game.Card import Card
 from Game.Enums import DrawCard
-import uuid
+import uuid, random
 
 class Deck(object):
 
@@ -13,7 +13,9 @@ class Deck(object):
         self.deck = deque([])
 
     def addCardToDeck(self, card):
+        card.id = random.randint(1, 100)
         card.uniqueCardId = uuid.uuid4()
+        print('Deck => ', card.id)
         self.deck.append(card)
 
     def shuffleDeck(self):

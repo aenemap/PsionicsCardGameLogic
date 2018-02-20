@@ -1,12 +1,13 @@
 class Ability(object):
 
-    def __init__(self, name, priority, abilityEffectType, argType):
+    def __init__(self, name, abilityDescription, priority, abilityEffectType, abilityArgType, attachedCard):
         self.name = name
+        self.abilityDescription =  abilityDescription
         self.priority = priority
         self.abilityEffectType = abilityEffectType
-        self.argType = argType
+        self.abilityArgType = abilityArgType
+        self.attachedCard = attachedCard
         self.canStack = True
-        self.attachedCard = None
 
 
     def invoke():

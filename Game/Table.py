@@ -35,7 +35,7 @@ class Table(object):
                 sortedAbilities = sorted(self.startOfTurnEffects, key=lambda k: k.priority)
                 for effect in sortedAbilities:
                     print('effect.priority', effect.priority)
-                    if effect.argType == AbilityArgType.CardOwner:
+                    if effect.abilityArgType == AbilityArgType.CardOwner:
                         effect.invoke(self.currentPlayer)
                 print('------------ Start Of Turn Effects Complete --------------')
 
@@ -80,7 +80,7 @@ class Table(object):
                 sortedAbilities = sorted(self.endOfTurnEffects, key=lambda k: k.priority)
                 for effect in sortedAbilities:
                     print('effect.priority', effect.priority)
-                    if effect.argType == AbilityArgType.CardOwner:
+                    if effect.abilityArgType == AbilityArgType.CardOwner:
                         effect.invoke(self.currentPlayer)
                 print('------------ End Of Turn Effects Complete --------------')
 

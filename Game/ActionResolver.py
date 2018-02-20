@@ -23,7 +23,7 @@ class ActionResolver(object):
                     elif cardToPlay.ability.abilityEffectType == AbilityEffectType.EndOfTurn:
                         endOfTurnEffects.append(cardToPlay.ability)
                     elif cardToPlay.ability.abilityEffectType == AbilityEffectType.Immediate:
-                        if cardToPlay.ability.argType == AbilityArgType.CurrentPlayer:
+                        if cardToPlay.ability.abilityArgType == AbilityArgType.CurrentPlayer:
                             cardToPlay.ability.invoke(currentPlayer)
             else:
                 print('Card with id {0} could not be found in Hand', cardIdToPlay)
@@ -58,13 +58,43 @@ class ActionResolver(object):
             shield = opposingPlayer.getCardFromPlayerArea(shieldToAttack, PlayerArea.Shields)
             if shield.isFaceDown:
                 # if the shield is face down the opposing players desides to load it or not if he has the energy
-                if shield.energy_cost <= opposingPlayer.energy_pool:
+                if shield.energy_cost < opposingPlayer.energy_pool:
                     opponentLoadsShield = input('Does opponents loads the shield?(yes/no):')
                     if (opponentLoadsShield == 'yes'):
                         opposingPlayer.removeFromEnergyPool(shield.energy_cost)
+                        if shield.ability:
+                            if shield.ability.abilityEffectType == AbilityEffectType.BeforeLoad:
+                                if isinstance(shield.ability.abilityArgType, list):
+                                    abilityArgs = None
+                                    for abilityArg in shield.ability.abilityArgType:
+                                        if abilityArg == AbilityArgType.Card:
+                                            abilityArgs.append(shield)
+                                        if abilityArg == AbilityArgType.CurrentPlayer:
+                                            abilityArgs.append(currentPlayer)
+                                        if abilityArg == AbilityArgType.OpposingPlayer:
+                                            abilityArgs.append(opposingPlayer)
+                                    shield.ability.invoke(*abilityArgs)
+                                else:
+                                    if shield.ability.abilityArgType == AbilityArgType.Card:
+                                        shield.ability.invoke(shield)
                         shield.isCardFaceDown(False)
-                        if attack_value >= shield.energy_cost:
-                            attack_value -= shield.energy_cost
+                        if shield.ability:
+                            if shield.ability.abilityEffectType == AbilityEffectType.AfterLoad:
+                                if isinstance(shield.ability.abilityArgType, list):
+                                    abilityArgs = []
+                                    for abilityArg in shield.ability.abilityArgType:
+                                        if abilityArg == AbilityArgType.Card:
+                                            abilityArgs.append(shield)
+                                        if abilityArg == AbilityArgType.CurrentPlayer:
+                                            abilityArgs.append(currentPlayer)
+                                        if abilityArg == AbilityArgType.OpposingPlayer:
+                                            abilityArgs.append(opposingPlayer)
+                                    shield.ability.invoke(*abilityArgs)
+                                else:
+                                    if shield.ability.abilityArgType == AbilityArgType.Card:
+                                        shield.ability.invoke(shield)
+                        if attack_value >= shield.defence_value:
+                            attack_value -= shield.defence_value
                             shield.removeConsistency(1)
                             if shield.consistency_value <=0:
                                 opposingPlayer.removeCardFromPlayerArea(shield.id, PlayerArea.Shields.value)
@@ -78,8 +108,8 @@ class ActionResolver(object):
                     return attack_value
 
             else:
-                if attack_value >= shield.energy_cost:
-                    attack_value -= shield.energy_cost
+                if attack_value >= shield.defence_value:
+                    attack_value -= shield.defence_value
                     shield.removeConsistency(1)
                 else:
                     attack_value = 0

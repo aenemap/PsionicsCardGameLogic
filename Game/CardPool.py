@@ -4,102 +4,58 @@ from Game.AbilityPool import *
 import uuid , random
 
 cardPool = []
-basicShield1 = ShieldCard(
-    id=random.randint(1, 100),
-    name='Shield1',
+oblivion = ShieldCard(
+    id=0,
+    name='Oblivion',
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
-    energy_cost=random.randint(1, 5),
-    consistency_value=random.randint(1, 3),
+    energy_cost= 3,
+    defence_value=2,
+    consistency_value= 3,
     isFaceDown=True)
+cardPool.append(oblivion)
 
-basicShield1.ability = DrawCardOnPlay(basicShield1, 1)
-cardPool.append(basicShield1)
-
-cardPool.append(ShieldCard(
-    id=random.randint(1, 100),
-    name='Shield2',
-    type= CardType.Shield,
-    sub_type=CardSubType.Absorbing,
-    energy_cost=random.randint(1, 5),
-    consistency_value=random.randint(1, 3),
-    isFaceDown=True))
-
-cardPool.append(ShieldCard(
-    id=random.randint(1, 100),
-    name='Shield3',
+barrage = ShieldCard(
+    id=0,
+    name='Barrage',
     type= CardType.Shield,
     sub_type=CardSubType.Basic,
-    energy_cost=random.randint(1, 5),
-    consistency_value=random.randint(1, 3),
-    isFaceDown=True))
+    energy_cost= 2,
+    defence_value=1,
+    consistency_value= 2,
+    isFaceDown=True)
+cardPool.append(barrage)
 
-cardPool.append(ShieldCard(
-    id=random.randint(1, 100),
-    name='Shield4',
+colossus = ShieldCard(
+    id=0,
+    name='Colossus',
     type= CardType.Shield,
-    sub_type=CardSubType.Mirror,
-    energy_cost=random.randint(1, 5),
-    consistency_value=random.randint(1, 3),
-    isFaceDown=True))
+    sub_type=CardSubType.Basic,
+    energy_cost= 4,
+    defence_value=3,
+    consistency_value= 3,
+    isFaceDown=True)
+cardPool.append(colossus)
 
-# cardPool.append(TalentCard(
-#     id=random.randint(1, 100),
-#     name='Talent4',
-#     type= CardType.Talent,
-#     sub_type= '',
-#     energy_cost=random.randint(1, 5),
-#     trash_value=3,
-#     isFaceDown=False))
-#
-# cardPool.append(TalentCard(
-#     id=random.randint(1, 100),
-#     name='Talent5',
-#     type= CardType.Talent,
-#     sub_type= '',
-#     energy_cost=random.randint(1, 5),
-#     trash_value=3,
-#     isFaceDown=False))
-#
-# cardPool.append(TalentCard(
-#     id=random.randint(1, 100),
-#     name='Talent6',
-#     type= CardType.Talent,
-#     sub_type= '',
-#     energy_cost=random.randint(1, 5),
-#     trash_value=3,
-#     isFaceDown=True))
-#
-# cardPool.append(TalentCard(
-#     id=random.randint(1, 100),
-#     name='Talent7',
-#     type= CardType.Talent,
-#     sub_type= '',
-#     energy_cost=random.randint(1, 5),
-#     trash_value=3,
-#     isFaceDown=True))
+doomWall = ShieldCard(
+    id=0,
+    name='Doom Wall',
+    type= CardType.Shield,
+    sub_type=CardSubType.Basic,
+    energy_cost= 3,
+    defence_value=3,
+    consistency_value= 2,
+    isFaceDown=True)
+cardPool.append(doomWall)
 
-
-newTalentCard = TalentCard(
-    id=random.randint(1, 100),
-    name='Talent5',
-    type= CardType.Talent,
-    sub_type= '',
-    energy_cost=2,
-    trash_value=3,
-    isFaceDown=False)
-
-newTalentCard.ability = GainHealthAtStartOfRound(newTalentCard, 1)
-cardPool.append(newTalentCard)
-
-energyGain = TalentCard(
-    id=random.randint(1, 100),
-    name='energyGain',
-    type= CardType.Talent,
-    sub_type= '',
-    energy_cost=2,
-    trash_value=3,
-    isFaceDown=False)
-
-energyGain.ability = GainEnergyAtStartOfRound(energyGain, 1)
-cardPool.append(energyGain)
+nightbane = ShieldCard(
+    id=0,
+    name='Nightbane',
+    type= CardType.Shield,
+    sub_type=CardSubType.Basic,
+    energy_cost= 0,
+    defence_value=3,
+    consistency_value= 0,
+    isFaceDown=True)
+nightbane.ability = NightBaneAbility(nightbane)
+cardPool.append(nightbane)
