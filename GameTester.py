@@ -6,17 +6,27 @@ from Game.Deck import Deck
 from Game.Hand import Hand
 from Game.Table import Table
 from Game.Enums import *
+from Game.Logger import *
 
 import uuid
 import sys
+import copy
+import logging
+
+
+log = Log('game.txt')
+
+log.writeToLog('THE GAME STARTS')
 
 
 deck1 = Deck(uuid.uuid4(), 'Player1 Deck')
 deck2 = Deck(uuid.uuid4(), 'Player2 Deck')
 
 for card in cardPool:
-    deck1.addCardToDeck(card)
-    deck2.addCardToDeck(card)
+    for x in range(0,3):
+        card  = copy.copy(card)
+        deck1.addCardToDeck(card)
+        deck2.addCardToDeck(card)
 
 deck1.shuffleDeck()
 deck2.shuffleDeck()
