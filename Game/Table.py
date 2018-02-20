@@ -73,6 +73,9 @@ class Table(object):
                 self.printTable()
 
             #After each action check if any players health is at zero and end the game
+            if currentPlayer.health <= 0 or opposingPlayer.health <= 0:
+                print('GAME OVER')
+                print('PLAYER {0} WINS'.format(currentPlayer.name if currentPlayer.health <= 0 else opposingPlayer.name))
 
             #End Of Turn Effects
             if len(self.endOfTurnEffects) > 0:

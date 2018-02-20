@@ -36,11 +36,11 @@ class ActionResolver(object):
             attack_value = input("How much energy to spend for the attack:")
             attack_value = int(attack_value)
             currentPlayer.removeFromEnergyPool(attack_value)
-            attack_value = ActionResolver.shieldAreaResolution(currentPlayer, opposingPlayer, attack_value)
+            attack_value = ActionResolver.shieldAreaResolution(table, currentPlayer, opposingPlayer, attack_value)
             #if any attack pass the shield can be used to trash talents or attack the players health
             print('Remain Attack after Shield Area:', attack_value)
             if attack_value > 0:
-                attack_value = ActionResolver.talentAreaResolution(currentPlayer, opposingPlayer, attack_value)
+                attack_value = ActionResolver.talentAreaResolution(table, currentPlayer, opposingPlayer, attack_value)
 
             print('Remain Attack after Talent Area:', attack_value)
             if attack_value > 0:
@@ -50,7 +50,7 @@ class ActionResolver(object):
 
 
     @staticmethod
-    def shieldAreaResolution(currentPlayer, opposingPlayer, attack_value):
+    def shieldAreaResolution(table, currentPlayer, opposingPlayer, attack_value):
         #if the opposingPlayer has shields currentPlayer chooses the shield to attack
         if len(opposingPlayer.playerArea[PlayerArea.Shields.value]) > 0:
             shieldToAttack = input("Choose a shield to attack (id):")
@@ -63,36 +63,20 @@ class ActionResolver(object):
                     if (opponentLoadsShield == 'yes'):
                         opposingPlayer.removeFromEnergyPool(shield.energy_cost)
                         if shield.ability:
-                            if shield.ability.abilityEffectType == AbilityEffectType.BeforeLoad:
-                                if isinstance(shield.ability.abilityArgType, list):
-                                    abilityArgs = None
-                                    for abilityArg in shield.ability.abilityArgType:
-                                        if abilityArg == AbilityArgType.Card:
-                                            abilityArgs.append(shield)
-                                        if abilityArg == AbilityArgType.CurrentPlayer:
-                                            abilityArgs.append(currentPlayer)
-                                        if abilityArg == AbilityArgType.OpposingPlayer:
-                                            abilityArgs.append(opposingPlayer)
+                            if shield.ability.abilityEffectType == AbilityEffectType.BeforeLoadShield:
+                                abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield)
+                                if isinstance(abilityArgs, list):
                                     shield.ability.invoke(*abilityArgs)
                                 else:
-                                    if shield.ability.abilityArgType == AbilityArgType.Card:
-                                        shield.ability.invoke(shield)
+                                    shield.invoke(abilityArgs)
                         shield.isCardFaceDown(False)
                         if shield.ability:
-                            if shield.ability.abilityEffectType == AbilityEffectType.AfterLoad:
-                                if isinstance(shield.ability.abilityArgType, list):
-                                    abilityArgs = []
-                                    for abilityArg in shield.ability.abilityArgType:
-                                        if abilityArg == AbilityArgType.Card:
-                                            abilityArgs.append(shield)
-                                        if abilityArg == AbilityArgType.CurrentPlayer:
-                                            abilityArgs.append(currentPlayer)
-                                        if abilityArg == AbilityArgType.OpposingPlayer:
-                                            abilityArgs.append(opposingPlayer)
+                            if shield.ability.abilityEffectType == AbilityEffectType.AfterLoadShield:
+                                abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield)
+                                if isinstance(abilityArgs, list):
                                     shield.ability.invoke(*abilityArgs)
                                 else:
-                                    if shield.ability.abilityArgType == AbilityArgType.Card:
-                                        shield.ability.invoke(shield)
+                                    shield.invoke(abilityArgs)
                         if attack_value >= shield.defence_value:
                             attack_value -= shield.defence_value
                             shield.removeConsistency(1)
@@ -117,7 +101,7 @@ class ActionResolver(object):
         return attack_value
 
     @staticmethod
-    def talentAreaResolution(currentPlayer, opposingPlayer, attack_value):
+    def talentAreaResolution(table, currentPlayer, opposingPlayer, attack_value):
         # check if opposing player has any talents
         if len(opposingPlayer.playerArea[PlayerArea.Talents.value]) > 0:
             hasFaceDownTalents = len(list(filter(lambda x : x.isFaceDown, opposingPlayer.playerArea[PlayerArea.Talents.value])))

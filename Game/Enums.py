@@ -34,8 +34,8 @@ class AbilityEffectType(Enum):
     EndOfTurn = 'EndOfTurn'
     Immediate = 'Immediate'
     Permanent = 'Permanent'
-    BeforeLoad = 'BeforeLoad'
-    AfterLoad = 'AfteLoad'
+    BeforeLoadShield = 'BeforeLoadShield'
+    AfterLoadShield = 'AfterLoadShield'
 
 class AbilityArgType(Enum):
     CardOwner = 'CardOwner'

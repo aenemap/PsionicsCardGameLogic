@@ -52,11 +52,9 @@ class NightBaneAbility(Ability):
     def __init__(self, attachedCard):
         description = 'When this shield is loaded gains consistency equals to the energy spend (max 5)'
         abilityArgs = [AbilityArgType.Card, AbilityArgType.OpposingPlayer]
-        Ability.__init__(self, 'NightBaneAbility', description, 1, AbilityEffectType.AfterLoad, abilityArgs, attachedCard)
+        Ability.__init__(self, 'NightBaneAbility', description, 1, AbilityEffectType.AfterLoadShield, abilityArgs, attachedCard)
 
     def invoke(self, card, player):
-        print('NightBaneAbility => invoke => card =>', card)
-        print('NightBaneAbility => invoke => player =>', player)
         if card:
             energy_amount = int(input('How much energy you want to spent to load the shield?'))
             while energy_amount > 5:
