@@ -19,14 +19,15 @@ class ActionResolver(object):
                     currentPlayer.removeFromEnergyPool(cardToPlay.energy_cost)
                 currentPlayer.playCard(cardToPlay)
                 if cardToPlay.ability:
+                    #set the reference of the card to the ability. Issue because of copies
                     cardToPlay.ability.attachedCard = cardToPlay
                     if cardToPlay.ability.abilityEffectType == AbilityEffectType.StartOfTurn:
                         startOfTurnEffects.append(cardToPlay.ability)
                     elif cardToPlay.ability.abilityEffectType == AbilityEffectType.EndOfTurn:
                         endOfTurnEffects.append(cardToPlay.ability)
                     elif cardToPlay.ability.abilityEffectType == AbilityEffectType.Immediate:
-                        if cardToPlay.ability.abilityArgType == AbilityArgType.CurrentPlayer:
-                            cardToPlay.ability.invoke(currentPlayer)
+                        abilityArgs = cardToPlay.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, cardToPlay, None)
+                        ActionResolver.invokeAbility(cardToPlay, abilityArgs)
             else:
                 print('Card with id {0} could not be found in Hand', cardIdToPlay)
         elif action == TurnAction.Concentration.value:
@@ -69,10 +70,7 @@ class ActionResolver(object):
                         if shield.ability:
                             if shield.ability.abilityEffectType == AbilityEffectType.BeforeLoadShield:
                                 abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield, attack_value)
-                                if isinstance(abilityArgs, list):
-                                    shield.ability.invoke(*abilityArgs)
-                                else:
-                                    shield.invoke(abilityArgs)
+                                ActionResolver.invokeAbility(shield, abilityArgs)
                         shield.isCardFaceDown(False)
                         # After Load Shield Abilities
                         if shield.ability:
@@ -87,10 +85,7 @@ class ActionResolver(object):
                             if shield.ability:
                                 if shield.ability.abilityEffectType == AbilityEffectType.WhenAttacked:
                                     abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield, attack_value)
-                                    if isinstance(abilityArgs, list):
-                                        shield.ability.invoke(*abilityArgs)
-                                    else:
-                                        shield.ability.invoke(abilityArgs)
+                                    ActionResolver.invokeAbility(shield, abilityArgs)
                             attack_value -= shield.defence_value
                             shield.removeConsistency(1)
                             if shield.consistency_value <=0:
@@ -144,3 +139,10 @@ class ActionResolver(object):
                     opposingPlayer.removeCardFromPlayerArea(talent.id, PlayerArea.Talents.value)
 
         return attack_value
+
+    @staticmethod
+    def invokeAbility(card, args):
+        if isinstance(args, list):
+            card.ability.invoke(*args)
+        else:
+            card.ability.invoke(args)

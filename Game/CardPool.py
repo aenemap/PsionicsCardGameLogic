@@ -1,7 +1,11 @@
 from Game.Card import *
 from Game.Enums import *
 from Game.AbilityPool import *
-import uuid , random
+import uuid , random, logging
+
+logger = logging.getLogger(__name__)
+
+logger.info('Creating the card pool')
 
 cardPool = []
 oblivion = ShieldCard(
@@ -90,8 +94,18 @@ echo = TalentCard(
     type= CardType.Talent,
     sub_type=None,
     energy_cost= 2,
-    trash_value=3
+    trash_value=3,
     isFaceDown=True
 )
 echo.ability = GainEnergyAtStartOfRound(echo, 1)
 cardPool.append(echo)
+
+change = EventCard(
+    id=0,
+    name='Change',
+    type= CardType.Event,
+    sub_type=None,
+    energy_cost= 3
+)
+change.ability = ImmediateGainEnergy(change, 7)
+cardPool.append(change)

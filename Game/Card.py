@@ -1,3 +1,7 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
 class Card(object):
 
     def __init__(self, id, name, type, sub_type, energy_cost):
@@ -21,6 +25,7 @@ class ShieldCard(Card):
         self.isFaceDown = isFaceDown
         self.defence_value = None
         self.absorbing_value = None
+        logger.info('Shield Card {0} Created'.format(self.name))
 
 
     def addConsistency(self, amount):
@@ -47,6 +52,7 @@ class TalentCard(Card):
         Card.__init__(self, id, name, type, sub_type, energy_cost)
         self.trash_value = trash_value
         self.isFaceDown = isFaceDown
+        logger.info('Talent Card {0} Created'.format(self.name))
 
     def isCardFaceDown(self, value):
         self.isFaceDown = value
@@ -62,4 +68,12 @@ class TalentCard(Card):
 
 
 class EventCard(Card):
-    pass
+    def __init__(self, id, name, type, sub_type, energy_cost):
+        Card.__init__(self, id, name, type, sub_type, energy_cost)
+        self.isFaceDown = False
+
+    def printCard(self, card):
+        abilityDescription = ''
+        if card.ability:
+            abilityDescription = card.ability.abilityDescription
+        print('id:{0} - Name:{1} - EnergyCost:{2}  - Ability:{3}'.format(card.id,card.name, card.energy_cost, abilityDescription))

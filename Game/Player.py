@@ -70,6 +70,8 @@ class Player(object):
 
     def playCard(self, card):
         if card.type == CardType.Shield:
-            self.playerArea['Shields'].append(card)
+            self.playerArea[PlayerArea.Shields.value].append(card)
         elif card.type == CardType.Talent:
-            self.playerArea['Talents'].append(card)
+            self.playerArea[PlayerArea.Talents.value].append(card)
+        elif card.type == CardType.Event:
+            self.playerArea[PlayerArea.DiscardPile.value].append(card)
