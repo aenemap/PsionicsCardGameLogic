@@ -11,12 +11,6 @@ from Game.Logger import *
 import uuid
 import sys
 import copy
-import logging
-
-
-log = Log('game.txt')
-
-log.writeToLog('THE GAME STARTS')
 
 
 deck1 = Deck(uuid.uuid4(), 'Player1 Deck')
