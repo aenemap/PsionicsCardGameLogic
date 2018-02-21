@@ -6,7 +6,6 @@ from Game.Deck import Deck
 from Game.Hand import Hand
 from Game.Table import Table
 from Game.Enums import *
-from Game.Logger import *
 
 import uuid
 import sys
