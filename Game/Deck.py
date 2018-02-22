@@ -13,7 +13,7 @@ class Deck(object):
         self.deck = deque([])
 
     def addCardToDeck(self, card):
-        card.id = random.randint(1, 100)
+        card.id = random.randint(1, 1000)
         card.uniqueCardId = uuid.uuid4()
         print('Deck => ', card.id)
         self.deck.append(card)

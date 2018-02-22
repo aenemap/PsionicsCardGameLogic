@@ -35,6 +35,7 @@ class Table(object):
                 print('------------ Start Of Turn Effects --------------')
                 sortedAbilities = sorted(self.startOfTurnEffects, key=lambda k: k.priority)
                 for effect in sortedAbilities:
+                    print(effect)
                     abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard, None)
                     if isinstance(abilityArgs, list):
                         effect.invoke(*abilityArgs)

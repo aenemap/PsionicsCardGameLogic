@@ -39,9 +39,12 @@ class Player(object):
         self.health += amount
 
     def getCardFromPlayerArea(self, cardid, area):
+        print('getCardFromPlayerArea => cardid =>', cardid)
+        print('getCardFromPlayerArea => area =>', area)
         card = None
         for p_area in PlayerArea:
             if p_area == area:
+                print('getCardFromPlayerArea => found the area')
                 card = None
                 try:
                     card = list(filter(lambda x: x.id == int(cardid), self.playerArea[p_area.value]))[0]
@@ -57,13 +60,17 @@ class Player(object):
             return self.playerArea[PlayerArea.Talents.value]
 
     def removeCardFromPlayerArea(self, cardid, area):
+        print('removeCardFromPlayerArea')
         card = None
         card = self.getCardFromPlayerArea(cardid, area)
+        print('removeCardFromPlayerArea => card =>', card)
         if card:
-            cardIndex = self.playerArea[p_area.value].index(card)
+            cardIndex = self.playerArea[area.value].index(card)
+            print('removeCardFromPlayerArea => cardIndex => ', cardIndex)
             if cardIndex > -1:
-                card = self.playerArea[p_area.value].pop(cardIndex)
-                self.playerArea[PlayerArea.DiscardPile].append(card)
+                card = self.playerArea[area.value].pop(cardIndex)
+                print('removeCardFromPlayerArea => card.name => ', card.name)
+                self.playerArea[PlayerArea.DiscardPile.value].append(card)
 
 
 
