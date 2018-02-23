@@ -22,7 +22,7 @@ class ActionResolver(object):
                     #set the reference of the card to the ability. Issue because of copies
                     cardToPlay.ability.attachedCard = cardToPlay
                     if not cardToPlay.isFaceDown:
-                        ActionResolver.handleActivity(table, currentPlayer, opposingPlayer, cardToPlay)
+                        ActionResolver.handleAbility(table, currentPlayer, opposingPlayer, cardToPlay)
             else:
                 print('Card with id {0} could not be found in Hand', cardIdToPlay)
         elif action == TurnAction.Concentration.value:
@@ -116,6 +116,7 @@ class ActionResolver(object):
                     whichTalent = int(whichTalent)
                     talent = opposingPlayer.getCardFromPlayerArea(whichTalent, PlayerArea.Talents)
                     talent.isCardFaceDown(False)
+                    ActionResolver.handleAbility(table, currentPlayer, opposingPlayer, talent)
                     if talent.trash_value <= attack_value:
                         #if you can trash it choose if you want
                         trashTalent = input('The trash cost of the talent card is {0}. Do you want to trash it? (yes/no)'.format(talent.trash_value))
@@ -134,6 +135,7 @@ class ActionResolver(object):
                     talent = opposingPlayer.getCardFromPlayerArea(talentToTrash, PlayerArea.Talents)
                     attack_value = attack_value - talent.trash_value
                     opposingPlayer.removeCardFromPlayerArea(talent.id, PlayerArea.Talents)
+                    ActionResolver.removeReccuringAbility(table, talent)
 
         return attack_value
 
@@ -148,18 +150,18 @@ class ActionResolver(object):
     def removeReccuringAbility(table, card):
         effectList = []
         if card.ability:
-            if card.ability.AbilityEffectType == AbilityEffectType.StartOfTurn:
+            if card.ability.abilityEffectType == AbilityEffectType.StartOfTurn:
                 effectList = table.startOfTurnEffects
-            elif card.ability.AbilityEffectType == AbilityEffectType.EndOfTurn:
+            elif card.ability.abilityEffectType == AbilityEffectType.EndOfTurn:
                 effectList = table.endOfTurnEffects
-
             if len(list(filter(lambda x : x.attachedCard.id == card.id, effectList))):
                 abilityIndex = table.startOfTurnEffects.index(card.ability)
                 if abilityIndex > -1:
                     effectList.pop(abilityIndex)
 
     @staticmethod
-    def handleActivity(table, currentPlayer, opposingPlayer, card):
+    def handleAbility(table, currentPlayer, opposingPlayer, card):
+        print('inside handleAbility')
         if card.ability.abilityEffectType == AbilityEffectType.StartOfTurn:
             table.startOfTurnEffects.append(card.ability)
         elif card.ability.abilityEffectType == AbilityEffectType.EndOfTurn:
