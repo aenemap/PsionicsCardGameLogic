@@ -71,7 +71,7 @@ class NightBaneAbility(Ability):
 class IvoryAbility(Ability):
 
     def __init__(self, attachedCard):
-        description = 'You may reflect half the attack value to your opponent to a minimum of 1'
+        description = 'You reflect half the attack value to your opponent to a minimum of 1'
         abilityArgs = [AbilityArgType.CurrentPlayer, AbilityArgType.AttackValue]
         Ability.__init__(self, 'IvoryAbility', description, 1, AbilityEffectType.WhenAttacked, abilityArgs, attachedCard)
 
@@ -93,3 +93,26 @@ class ImmediateGainEnergy(Ability):
     def invoke(self, player):
         if player:
             player.energy_pool += self.amount
+
+
+class ImmediateGainHealth(Ability):
+
+    def __init__(self, attachedCard, amount):
+        description = 'Gain {0} health.'.format(amount)
+        Ability.__init__(self, 'ImmediateGainHealth', description, 1, AbilityEffectType.Immediate, AbilityArgType.CardOwner, attachedCard)
+        self.amount = amount
+
+    def invoke(self, player):
+        if player:
+            player.health += self.amount
+
+class WhenLoadsShieldGainEnergy(Ability):
+
+    def __init__(self, attachedCard, amount):
+        description = 'When your opponent loads a shield gain {0} energy'.format(amount)
+        Ability.__init__(self, 'WhenLoadsShieldGainEnergy', description, 1, AbilityEffectType.AfterLoadShield, AbilityArgType.CardOwner, attachedCard)
+        self.amount = amount
+
+    def invoke(self, player):
+        if player:
+            player.energy += 1

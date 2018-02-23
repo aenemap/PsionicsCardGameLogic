@@ -72,6 +72,12 @@ class Player(object):
                 print('removeCardFromPlayerArea => card.name => ', card.name)
                 self.playerArea[PlayerArea.DiscardPile.value].append(card)
 
+    def hasCardsInPlayerArea(self, area, isFaceDown = None):
+        if isFaceDown:
+            return len(list(filter(lambda x: x.isFaceDown, self.playerArea[area.value])))
+        else:
+            return len(self.playerArea)
+
 
 
 

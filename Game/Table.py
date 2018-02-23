@@ -29,6 +29,32 @@ class Table(object):
             sys.stdout.write(ConsoleColors.Brown.value)
             print('############################### Player {0} TURN ######################'.format(startPlayer))
             sys.stdout.write(ConsoleColors.Reset.value)
+            hasShieldsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Shields, True)
+            hasTalentsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Talents, True)
+            print('------------------ Before start of turn actions, only load shield or develop talents')
+            if hasShieldsFaceDown or hasTalentsFaceDown:
+                preAction = input('Do you want to take an action before the start of turn?(yes/no):')
+                while preAction == 'yes':
+                    print('1 - Load Shield')
+                    print('2 - Develop Talent')
+                    preTurnAction = int(input('Choose an action:'))
+                    cardType = 'shield' if preTurnAction == 1 else 'talent'
+                    whichCard = int(input('Choose the {0} to load (id):'.format(cardType)))
+                    cardArea = PlayerArea.Shields if preTurnAction == 1 else PlayerArea.Talents
+                    card = self.currentPlayer.getCardFromPlayerArea(whichCard, cardArea)
+                    card.isFaceDown = False
+                    if card.ability:
+                        card.ability.attachedCard = card
+                        ActionResolver.handleAbility(self, self.currentPlayer, self.opposingPlayer, card)
+                    self.currentPlayer.energy_pool -= card.energy_cost
+                    self.printTable()
+                    hasShieldsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Shields, True)
+                    hasTalentsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Talents, True)
+                    if hasShieldsFaceDown or hasTalentsFaceDown:
+                        preAction = input('Do you want to take an action before the start of turn?(yes/no):')
+                    else:
+                        preAction = 'no'
+
             #Start Of Turn Effects
             print('length of startOfTurnEffects => ', len(self.startOfTurnEffects))
             if len(self.startOfTurnEffects) > 0:

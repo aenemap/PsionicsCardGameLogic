@@ -1,8 +1,9 @@
 [] Better script for the turns. Should allow to rearrange actions from mistakes etc..
 [] Code to load cards from excel
-[] Somehow to design an event system. Possibly function that will be appended in a deque and they will execute
-[] Find a way to handle abilities
-[] Start and end of turn effects
+[O] Somehow to design an event system. Possibly function that will be appended in a deque and they will execute
+[X] Find a way to handle abilities
+[X] Start and end of turn effects
+
 
 
 Abilities
@@ -10,3 +11,8 @@ Abilities
 - Abilities that triggers immediately when a card is played
 - Abilities that triggers every round till they are removed
 - Abilities that change the rules of the game
+
+Thoughts
+
+- I think that abilityEffectType Should split to AbilityEffectType and AbilityEffectTime
+  The type of the ability Immediate or Permanent and when is triggered in the game?

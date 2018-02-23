@@ -71,10 +71,7 @@ class ActionResolver(object):
                         if shield.ability:
                             if shield.ability.abilityEffectType == AbilityEffectType.AfterLoadShield:
                                 abilityArgs = shield.ability.getArgsForAbility(table, currentPlayer, opposingPlayer, shield, attack_value)
-                                if isinstance(abilityArgs, list):
-                                    shield.ability.invoke(*abilityArgs)
-                                else:
-                                    shield.invoke(abilityArgs)
+                                ActionResolver.invokeAbility(shield, abilityArgs)
                         if attack_value >= shield.defence_value:
                             # WhenAttacked Abilities
                             if shield.ability:
@@ -107,7 +104,8 @@ class ActionResolver(object):
     def talentAreaResolution(table, currentPlayer, opposingPlayer, attack_value):
         # check if opposing player has any talents
         if len(opposingPlayer.playerArea[PlayerArea.Talents.value]) > 0:
-            hasFaceDownTalents = len(list(filter(lambda x : x.isFaceDown, opposingPlayer.playerArea[PlayerArea.Talents.value])))
+            # hasFaceDownTalents = len(list(filter(lambda x : x.isFaceDown, opposingPlayer.playerArea[PlayerArea.Talents.value])))
+            hasFaceDownTalents = opposingPlayer.hasCardsInPlayerArea(PlayerArea.Talents, True)
             if hasFaceDownTalents > 0:
                 #if opponent has face down talents choose if  you want to reveal one
                 revealTalent = input('Opposing Player has hidden talents do you want to reveal 1?:')

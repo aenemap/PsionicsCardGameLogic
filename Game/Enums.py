@@ -37,6 +37,8 @@ class AbilityEffectType(Enum):
     BeforeLoadShield = 'BeforeLoadShield'
     AfterLoadShield = 'AfterLoadShield'
     WhenAttacked = 'WhenAttacked'
+    BeforeLoadTalent = 'BeforeLoadTalent'
+    AfterLoadTalent = 'AfterLoadTalent'
 
 class AbilityArgType(Enum):
     CardOwner = 'CardOwner'
