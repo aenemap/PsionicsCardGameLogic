@@ -3,6 +3,7 @@ import sys
 from Game.Enums import *
 from Game.Card import Card
 from Game.ActionResolver import *
+import logging
 
 class Table(object):
 
