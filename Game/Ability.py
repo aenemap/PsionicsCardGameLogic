@@ -11,7 +11,7 @@ class Ability(object):
         self.attachedCard = attachedCard
         self.canStack = True
 
-    def getArgsForAbility(self, table, currentPlayer, opposingPlayer, card, attack_value):
+    def getArgsForAbility(self, table, card, attack_value):
         args = None
         if isinstance(card.ability.abilityArgType, list):
             abilityArgs = []
@@ -19,14 +19,14 @@ class Ability(object):
                 if abilityArg == AbilityArgType.Card:
                     abilityArgs.append(card)
                 elif abilityArg == AbilityArgType.CurrentPlayer:
-                    abilityArgs.append(currentPlayer)
+                    abilityArgs.append(table.currentPlayer)
                 elif abilityArg == AbilityArgType.OpposingPlayer:
-                    abilityArgs.append(opposingPlayer)
+                    abilityArgs.append(table.opposingPlayer)
                 elif abilityArg == AbilityArgType.CardOwner:
-                    abilityArgs.append(currentPlayer)
+                    abilityArgs.append(table.currentPlayer)
                 elif abilityArg == AbilityArgType.BothPlayers:
-                    abilityArgs.append(currentPlayer)
-                    abilityArgs.append(opposingPlayer)
+                    abilityArgs.append(table.currentPlayer)
+                    abilityArgs.append(table.opposingPlayer)
                 elif abilityArg == AbilityArgType.Table:
                     abilityArgs.append(table)
                 elif abilityArg == AbilityArgType.AttackValue:
@@ -38,15 +38,15 @@ class Ability(object):
             if card.ability.abilityArgType == AbilityArgType.Card:
                 abilityArgs = card
             elif card.ability.abilityArgType == AbilityArgType.CurrentPlayer:
-                abilityArgs = currentPlayer
+                abilityArgs = table.currentPlayer
             elif card.ability.abilityArgType == AbilityArgType.OpposingPlayer:
-                abilityArgs = opposingPlayer
+                abilityArgs = table.opposingPlayer
             elif card.ability.abilityArgType == AbilityArgType.CardOwner:
-                abilityArgs = currentPlayer
+                abilityArgs = table.currentPlayer
             elif card.ability.abilityArgType == AbilityArgType.BothPlayers:
                 abilityArgs = []
-                abilityArgs.append(currentPlayer)
-                abilityArgs.append(opposingPlayer)
+                abilityArgs.append(table.currentPlayer)
+                abilityArgs.append(table.opposingPlayer)
             elif card.ability.abilityArgType == AbilityArgType.Table:
                 abilityArgs = table
             elif card.ability.abilityArgType == AbilityArgType.AttackValue:

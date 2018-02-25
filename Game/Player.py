@@ -61,6 +61,7 @@ class Player(object):
 
     def removeCardFromPlayerArea(self, cardid, area):
         print('removeCardFromPlayerArea')
+        print('removeCardFromPlayerArea => cardid => ', cardid)
         card = None
         card = self.getCardFromPlayerArea(cardid, area)
         print('removeCardFromPlayerArea => card =>', card)

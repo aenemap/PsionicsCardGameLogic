@@ -1,5 +1,6 @@
 import random
 import sys
+from collections import deque
 from Game.Enums import *
 from Game.Card import Card
 from Game.ActionResolver import *
@@ -14,7 +15,7 @@ class Table(object):
         self.opposingPlayer = None
         self.startOfTurnEffects = []
         self.endOfTurnEffects = []
-        self.permanentEffects = []
+        self.commandQueue = deque([])
         self.actionsPerTurn = 4
 
 
@@ -96,11 +97,11 @@ class Table(object):
                 # Check if the action can be executed , because of any card effect
                 ActionResolver.resolveAction(
                     table = self,
-                    action = action,
-                    currentPlayer=self.currentPlayer,
-                    opposingPlayer=self.opposingPlayer,
-                    startOfTurnEffects=self.startOfTurnEffects,
-                    endOfTurnEffects=self.endOfTurnEffects
+                    action = action
+                    # currentPlayer=self.currentPlayer,
+                    # opposingPlayer=self.opposingPlayer,
+                    # startOfTurnEffects=self.startOfTurnEffects,
+                    # endOfTurnEffects=self.endOfTurnEffects
                     )
                 self.printTable()
 
