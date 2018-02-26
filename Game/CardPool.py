@@ -21,16 +21,16 @@ cardPool = []
 # oblivion.defence_value = 2
 # cardPool.append(oblivion)
 #
-# barrage = ShieldCard(
-#     id=0,
-#     name='Barrage',
-#     type= CardType.Shield,
-#     sub_type=CardSubType.Basic,
-#     energy_cost= 2,
-#     consistency_value= 2,
-#     isFaceDown=True)
-# barrage.defence_value=1
-# cardPool.append(barrage)
+barrage = ShieldCard(
+    id=0,
+    name='Barrage',
+    type= CardType.Shield,
+    sub_type=CardSubType.Basic,
+    energy_cost= 2,
+    consistency_value= 2,
+    isFaceDown=True)
+barrage.defence_value=1
+cardPool.append(barrage)
 #
 # colossus = ShieldCard(
 #     id=0,
@@ -121,3 +121,15 @@ cardPool.append(echo)
 # )
 # lifeSource.ability = ImmediateGainHealth(lifeSource, 5)
 # cardPool.append(lifeSource)
+
+testCard = TalentCard(
+    id=0,
+    name='testCard',
+    type= CardType.Talent,
+    sub_type=None,
+    energy_cost= 2,
+    trash_value=2,
+    isFaceDown=True
+)
+testCard.ability = WhenLoadsShieldGainEnergy(testCard, 2)
+cardPool.append(testCard)

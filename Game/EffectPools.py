@@ -46,13 +46,13 @@ class ReccurringEffects(Effect):
 
     def invoke(self, table, attack_value, abilityEffectTime):
         effectsToInvoke = list(filter(lambda x: x.abilityEffectTime == abilityEffectTime, self.effectPool))
-        logger.info('Effects to Invoke length:{0}'.format(len(effectsToInvoke)))
+        logger.info('Effects to Invoke length:{0} , {1}'.format(len(effectsToInvoke), abilityEffectTime))
         if len(effectsToInvoke) > 0:
             sortedEffectsToInvoke = sorted(effectsToInvoke, key=lambda k: k.priority)
-            for x in sortedEffectsToInvoke:
+            for effect in sortedEffectsToInvoke:
                 abilityArgs = effect.getArgsForAbility(table, effect.attachedCard, attack_value)
                 logger.info('Invoking Effect => {0}'.format(effect))
-                if isinstance(abilityArg, list):
+                if isinstance(abilityArgs, list):
                     effect.invoke(*abilityArgs)
                 else:
                     effect.invoke(abilityArgs)

@@ -14,7 +14,6 @@ class GainHealthAtStartOfTurn(Ability):
 
     def invoke(self, player):
         if player:
-            print(self.attachedCard)
             playerArea = player.getPlayerArea(self.attachedCard)
             # print('Player Area => ', playerArea)
             if playerArea:
@@ -138,4 +137,9 @@ class WhenLoadsShieldGainEnergy(Ability):
 
     def invoke(self, player):
         if player:
-            player.energy += 1
+            playerArea = player.getPlayerArea(self.attachedCard)
+            if playerArea:
+                playerHasCard = len(list(filter(lambda x: x.uniqueCardId == self.attachedCard.uniqueCardId, playerArea)))
+                if playerHasCard > 0:
+                    if not self.attachedCard.isFaceDown:
+                        player.energy_pool += self.amount

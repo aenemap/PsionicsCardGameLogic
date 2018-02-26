@@ -45,6 +45,7 @@ class ActionResolver(object):
             logger.info('Player {0} chose the {1} action'.format(table.currentPlayer.name, TurnAction.InitiateAttack))
             attack_value = input("How much energy to spend for the attack:")
             attack_value = int(attack_value)
+            logger.info('Player Initiate Attack with an attack value of {0}'.format(attack_value))
             table.currentPlayer.removeFromEnergyPool(attack_value)
             attack_value = ActionResolver.shieldAreaResolution(table, attack_value)
             #if any attack pass the shield can be used to trash talents or attack the players health
@@ -126,13 +127,6 @@ class ActionResolver(object):
                     whichTalent = int(whichTalent)
                     talent = table.opposingPlayer.getCardFromPlayerArea(whichTalent, PlayerArea.Talents)
                     talent.isCardFaceDown(False)
-                    if talent.ability:
-                        if talent.ability.abilityEffectTime == AbilityEffectTime.Immediate:
-                            abilityArgs = shield.ability.getArgsForAbility(table, shield, attack_value)
-                            ActionResolver.invokeAbility(shield, abilityArgs)
-                        else:
-                            table.reccuringEffects.add(talent.ability)
-                    # ActionResolver.handleAbility(table, talent)
                     if talent.trash_value <= attack_value:
                         #if you can trash it choose if you want
                         trashTalent = input('The trash cost of the talent card is {0}. Do you want to trash it? (yes/no)'.format(talent.trash_value))
@@ -142,6 +136,8 @@ class ActionResolver(object):
                             table.opposingPlayer.removeCardFromPlayerArea(talent.id, PlayerArea.Talents)
                             table.clearEffect(talent)
                             table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.AfterTrashTalent)
+                        else:
+                            talent.isCardFaceDown(True)
                     else:
                         print('You cannot trash the talent')
             # if the opponent doesnt have any hidden talents check if you can trash any of the revealed
@@ -175,6 +171,9 @@ class ActionResolver(object):
         elif card.ability.abilityEffectTime == AbilityEffectTime.EndOfTurn:
             logger.info('handleAbility => adding card to endOfTurnEffects')
             table.endOfTurnEffects.add(card.ability)
+        elif card.ability.abilityEffectType == AbilityEffectType.Reccuring:
+            logger.info('handleAbility => adding card to reccuringEffects')
+            table.reccuringEffects.add(card.ability)
         elif card.ability.abilityEffectTime == AbilityEffectTime.OnPlay and card.ability.abilityEffectType == AbilityEffectType.Reccuring:
             logger.info('handleAbility => adding card to reccuringEffects')
             table.reccuringEffects.add(card.ability)
