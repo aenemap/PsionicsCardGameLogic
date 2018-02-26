@@ -1,4 +1,7 @@
 from Game.Enums import *
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Player(object):
 
@@ -15,6 +18,14 @@ class Player(object):
             PlayerArea.Talents.value:[],
             PlayerArea.DiscardPile.value: []
         }
+
+    def logPlayer(self, hand):
+        logger.info('Name:{0}'.format(self.name))
+        logger.info('Health:{0}'.format(self.health))
+        logger.info('Energy Pool:{0}'.format(self.energy_pool))
+        if hand:
+            logger.info('Hand -------')
+            logger.info(self.hand.logHand())
 
     def addDeckToPlayer(self, deck):
         self.decks[deck.deck_id] = deck

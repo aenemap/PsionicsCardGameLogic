@@ -4,7 +4,10 @@ from collections import deque
 from Game.Enums import *
 from Game.Card import Card
 from Game.ActionResolver import *
+from Game.EffectPools import *
 import logging
+
+logger = logging.getLogger(__name__)
 
 class Table(object):
 
@@ -13,8 +16,9 @@ class Table(object):
         self.player2 = player2
         self.currentPlayer = None
         self.opposingPlayer = None
-        self.startOfTurnEffects = []
-        self.endOfTurnEffects = []
+        self.startOfTurnEffects = None
+        self.endOfTurnEffects = None
+        self.reccuringEffects = None
         self.commandQueue = deque([])
         self.actionsPerTurn = 4
 
@@ -22,19 +26,43 @@ class Table(object):
 
     def startGame(self):
         # startPlayer = random.randint(1,2)
+        logger.info('#################################################################################')
+        logger.info('#################################################################################')
+        logger.info('#################################################################################')
+        logger.info('STARTING THE GAME')
         startPlayer = 1
+        logger.info('Start initiating pools for game effects')
+        self.startOfTurnEffects = StartOfTurn()
+        self.endOfTurnEffects = EndOfTurn()
+        self.reccuringEffects = ReccurringEffects()
+        logger.info('End initiating pools for game effects')
 
-        print('Starting Player is Player Number {0}'.format(startPlayer))
+        # print('Starting Player is Player Number {0}'.format(startPlayer))
         self.currentPlayer = self.player1 if startPlayer == 1 else self.player2
+        logger.info('Player goes first is {0}'.format(self.currentPlayer.name))
+        self.currentPlayer.logPlayer(True)
         self.opposingPlayer = self.player2 if startPlayer == 1 else self.player1
+        logger.info('Player goes second is {0}'.format(self.currentPlayer.name))
+        self.opposingPlayer.logPlayer(True)
+        turnCount = 0
         while(True):
+            turnCount += 1
             sys.stdout.write(ConsoleColors.Brown.value)
             print('############################### Player {0} TURN ######################'.format(startPlayer))
+            logger.info('####################### TURN {0} #############################'.format(turnCount))
             sys.stdout.write(ConsoleColors.Reset.value)
+
             hasShieldsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Shields, True)
+            logger.info('Current Player has Shields Face Down:{0}'.format(hasShieldsFaceDown))
+
             hasTalentsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Talents, True)
+            logger.info('Current Player has Talents Face Down:{0}'.format(hasTalentsFaceDown))
+
             print('------------------ Before start of turn actions, only load shield or develop talents')
+            logger.info('------------------ Before start of turn actions, only load shield or develop talents')
+            
             if hasShieldsFaceDown or hasTalentsFaceDown:
+                logger.info('Current Player had shield or talents face down')
                 preAction = input('Do you want to take an action before the start of turn?(yes/no):')
                 while preAction == 'yes':
                     print('1 - Load Shield')
@@ -43,12 +71,17 @@ class Table(object):
                     cardType = 'shield' if preTurnAction == 1 else 'talent'
                     whichCard = int(input('Choose the {0} to load (id):'.format(cardType)))
                     cardArea = PlayerArea.Shields if preTurnAction == 1 else PlayerArea.Talents
+                    logger.info('Card Area: {0}'.format(cardArea))
                     card = self.currentPlayer.getCardFromPlayerArea(whichCard, cardArea)
+                    card.logCard(card)
                     card.isFaceDown = False
                     if card.ability:
                         card.ability.attachedCard = card
-                        ActionResolver.handleAbility(self, self.currentPlayer, self.opposingPlayer, card)
+                        # self.reccuringEffects.add(card.ability)
+                        logger.info('Pre Actio, calling ActionResolver.handleAbility')
+                        ActionResolver.handleAbility(self, card)
                     self.currentPlayer.energy_pool -= card.energy_cost
+                    logger.info('Current Player energy pool: {0}'.format(self.currentPlayer.energy_pool))
                     self.printTable()
                     hasShieldsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Shields, True)
                     hasTalentsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Talents, True)
@@ -58,19 +91,13 @@ class Table(object):
                         preAction = 'no'
 
             #Start Of Turn Effects
-            print('length of startOfTurnEffects => ', len(self.startOfTurnEffects))
-            if len(self.startOfTurnEffects) > 0:
+            logger.info('----------------------------- START OF TURN EFFECTS -----------------------')
+            logger.info('startOfTurnEffects length: {0}'.format(self.startOfTurnEffects.getLength()))
+            if self.startOfTurnEffects.getLength() > 0:
                 print('------------ Start Of Turn Effects --------------')
-                sortedAbilities = sorted(self.startOfTurnEffects, key=lambda k: k.priority)
-                for effect in sortedAbilities:
-                    print(effect)
-                    abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard, None)
-                    if isinstance(abilityArgs, list):
-                        effect.invoke(*abilityArgs)
-                    else:
-                        print('i am on else')
-                        effect.invoke(abilityArgs)
-                print('------------ Start Of Turn Effects Complete --------------')
+                self.startOfTurnEffects.invoke(self)
+            print('------------ Start Of Turn Effects Complete --------------')
+            logger.info('----------------------------- START OF TURN EFFECTS COMPLETE-----------------------')
 
 
             #Actions
@@ -81,12 +108,14 @@ class Table(object):
                 print('Health:', self.currentPlayer.health)
                 print('Energy:', self.currentPlayer.energy_pool)
                 sys.stdout.write(ConsoleColors.Reset.value)
+                self.currentPlayer.logPlayer(False)
 
                 sys.stdout.write(ConsoleColors.Purple.value)
                 print('Opposing Player')
                 print('Health:', self.opposingPlayer.health)
                 print('Energy:', self.opposingPlayer.energy_pool)
                 sys.stdout.write(ConsoleColors.Reset.value)
+                self.opposingPlayer.logPlayer(False)
 
                 sys.stdout.write(ConsoleColors.Cyan.value)
                 for action in TurnAction:
@@ -98,10 +127,6 @@ class Table(object):
                 ActionResolver.resolveAction(
                     table = self,
                     action = action
-                    # currentPlayer=self.currentPlayer,
-                    # opposingPlayer=self.opposingPlayer,
-                    # startOfTurnEffects=self.startOfTurnEffects,
-                    # endOfTurnEffects=self.endOfTurnEffects
                     )
                 self.printTable()
 
@@ -109,18 +134,16 @@ class Table(object):
             if self.currentPlayer.health <= 0 or self.opposingPlayer.health <= 0:
                 print('GAME OVER')
                 print('PLAYER {0} WINS'.format(self.currentPlayer.name if self.currentPlayer.health <= 0 else self.opposingPlayer.name))
+                break
 
             #End Of Turn Effects
-            if len(self.endOfTurnEffects) > 0:
+            logger.info('------------------------------ END OF TURN EFFECTS ---------------------------')
+            logger.info('endOfTurnEffects length: {0}'.format(self.endOfTurnEffects.getLength()))
+            if self.endOfTurnEffects.getLength() > 0:
                 print('------------ End Of Turn Effects --------------')
-                sortedAbilities = sorted(self.endOfTurnEffects, key=lambda k: k.priority)
-                for effect in sortedAbilities:
-                    abilityArgs = effect.getArgsForAbility(self, self.currentPlayer, self.opposingPlayer, effect.attachedCard, None)
-                    if isinstance(abilityArgs, list):
-                        effect.invoke(*abilityArgs)
-                    else:
-                        effect.invoke(abilityArgs)
-                print('------------ End Of Turn Effects Complete --------------')
+                self.endOfTurnEffects.invoke(self)
+            print('------------ End Of Turn Effects Complete --------------')
+            logger.info('------------------------------ END OF TURN EFFECTS COMPLETE---------------------------')
 
             if startPlayer == 1:
                 startPlayer = 2
@@ -130,6 +153,14 @@ class Table(object):
                 startPlayer = 1
                 self.currentPlayer = self.player1
                 self.opposingPlayer = self.player2
+
+    def clearEffect(self, card):
+        if card.ability.abilityEffectTime == AbilityEffectTime.StartOfTurn:
+            self.startOfTurnEffects.removeEffect(card)
+        elif card.ability.abilityEffectTime == AbilityEffectTime.EndOfTurn:
+            self.endOfTurnEffects.removeEffect(card)
+        else:
+            self.reccuringEffects.removeEffect(card)
 
 
 

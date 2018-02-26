@@ -2,10 +2,11 @@ from Game.Enums import *
 
 class Ability(object):
 
-    def __init__(self, name, abilityDescription, priority, abilityEffectType, abilityArgType, attachedCard):
+    def __init__(self, name, abilityDescription, priority, abilityEffectTime, abilityEffectType, abilityArgType, attachedCard):
         self.name = name
         self.abilityDescription =  abilityDescription
         self.priority = priority
+        self.abilityEffectTime = abilityEffectTime
         self.abilityEffectType = abilityEffectType
         self.abilityArgType = abilityArgType
         self.attachedCard = attachedCard

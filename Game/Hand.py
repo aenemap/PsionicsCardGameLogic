@@ -1,4 +1,7 @@
 from Game.Card import Card
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Hand(object):
 
@@ -6,6 +9,13 @@ class Hand(object):
         self.hand_size = hand_size
         self.max_hand_size = max_hand_size
         self.hand = []
+
+    def logHand(self):
+        logger.info('Hand Size:{0}'.format(self.hand_size))
+        logger.info('HHHHHHHHHHHHHHHHHHHHHHHH Cards in Hand HHHHHHHHHHHHHHHHHHHHHHHH')
+        for card in self.hand:
+            card.logCard(card)
+        logger.info('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
 
     def getHand(self):
         return self.hand

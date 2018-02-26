@@ -30,15 +30,22 @@ class DrawCard(Enum):
     DrawFromBottomOfDeck = 'DrawFromBottomOfDeck'
 
 class AbilityEffectType(Enum):
+    Immediate = 'Immediate'
+    Reccuring = 'Reccuring'
+    Permanent = 'Permanent'
+
+class AbilityEffectTime(Enum):
+    OnPlay = 'OnPlay'
     StartOfTurn = 'StartOfTurn'
     EndOfTurn = 'EndOfTurn'
-    Immediate = 'Immediate'
-    Permanent = 'Permanent'
     BeforeLoadShield = 'BeforeLoadShield'
     AfterLoadShield = 'AfterLoadShield'
-    WhenAttacked = 'WhenAttacked'
+    BeforeShieldAttack = 'BeforeShieldAttack'
+    AfterShieldAttack = 'AfterShieldAttack'
     BeforeLoadTalent = 'BeforeLoadTalent'
     AfterLoadTalent = 'AfterLoadTalent'
+    BeforeTrashTalent = 'BeforeTrashTalent'
+    AfterTrashTalent = 'AfterTrashTalent'
 
 class AbilityArgType(Enum):
     CardOwner = 'CardOwner'

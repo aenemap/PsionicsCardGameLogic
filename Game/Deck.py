@@ -3,6 +3,9 @@ from collections import deque
 from Game.Card import Card
 from Game.Enums import DrawCard
 import uuid, random
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Deck(object):
 
@@ -15,7 +18,6 @@ class Deck(object):
     def addCardToDeck(self, card):
         card.id = random.randint(1, 1000)
         card.uniqueCardId = uuid.uuid4()
-        print('Deck => ', card.id)
         self.deck.append(card)
 
     def shuffleDeck(self):
