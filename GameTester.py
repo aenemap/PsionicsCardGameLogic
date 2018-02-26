@@ -39,10 +39,12 @@ player2 = Player(
 player2.addDeckToPlayer(deck2)
 player2.selectDeck(deck2)
 
-print('Player 1 Deck')
-player1.deck.printDeck()
-print('Player 2 Deck')
-player2.deck.printDeck()
+# print('Player 1 Deck')
+print('Player 1 Deck Card Count:', len(player1.deck.deck))
+# player1.deck.printDeck()
+# print('Player 2 Deck')
+print('Player 2 Deck Card Count:', len(player2.deck.deck))
+# player2.deck.printDeck()
 
 allHands = Hand(5,5)
 player1Hand = Hand(5,5)
