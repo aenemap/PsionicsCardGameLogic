@@ -78,7 +78,7 @@ class ActionResolver(object):
                         if shield.ability:
                             logger.info('Shield {0} has ability'.format(shield.name))
                             logger.info('Adding ability to reccuringEffects')
-                            ActionResolver.handleAbility(shield.ability)
+                            ActionResolver.handleAbility(table, shield)
                         table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.BeforeLoadShield)
                         shield.isCardFaceDown(False)
                         table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.AfterLoadShield)

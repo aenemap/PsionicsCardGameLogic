@@ -54,17 +54,17 @@ cardPool.append(barrage)
 # doomWall.defence_value=3
 # cardPool.append(doomWall)
 #
-# nightbane = ShieldCard(
-#     id=0,
-#     name='Nightbane',
-#     type= CardType.Shield,
-#     sub_type=CardSubType.Basic,
-#     energy_cost= 0,
-#     consistency_value= 0,
-#     isFaceDown=True)
-# nightbane.defence_value=3
-# nightbane.ability = NightBaneAbility(nightbane)
-# cardPool.append(nightbane)
+nightbane = ShieldCard(
+    id=0,
+    name='Nightbane',
+    type= CardType.Shield,
+    sub_type=CardSubType.Basic,
+    energy_cost= 0,
+    consistency_value= 0,
+    isFaceDown=True)
+nightbane.defence_value=3
+nightbane.ability = NightBaneAbility(nightbane)
+cardPool.append(nightbane)
 #
 # behemoth = ShieldCard(
 #     id=0,
@@ -122,14 +122,14 @@ cardPool.append(echo)
 # lifeSource.ability = ImmediateGainHealth(lifeSource, 5)
 # cardPool.append(lifeSource)
 
-testCard = TalentCard(
-    id=0,
-    name='testCard',
-    type= CardType.Talent,
-    sub_type=None,
-    energy_cost= 2,
-    trash_value=2,
-    isFaceDown=True
-)
-testCard.ability = WhenLoadsShieldGainEnergy(testCard, 2)
-cardPool.append(testCard)
+# testCard = TalentCard(
+#     id=0,
+#     name='testCard',
+#     type= CardType.Talent,
+#     sub_type=None,
+#     energy_cost= 2,
+#     trash_value=2,
+#     isFaceDown=True
+# )
+# testCard.ability = WhenLoadsShieldGainEnergy(testCard, 2)
+# cardPool.append(testCard)
