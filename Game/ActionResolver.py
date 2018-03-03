@@ -58,6 +58,8 @@ class ActionResolver(object):
                 # any remain attack goes to player
                 print('Damage Opponent by {0}'.format(attack_value))
                 table.opposingPlayer.takeDamage(attack_value)
+        # elif action == TurnAction.Focus.value:
+        #     table.currentPlayer.actionsPerTurn = table.currentPlayer.actionsPerTurn - 2
 
 
     @staticmethod

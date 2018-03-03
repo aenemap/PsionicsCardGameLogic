@@ -99,7 +99,6 @@ class Table(object):
             print('------------ Start Of Turn Effects Complete --------------')
             logger.info('----------------------------- START OF TURN EFFECTS COMPLETE-----------------------')
 
-
             #Actions
             for action in range(1, self.currentPlayer.actionsPerTurn + 1):
 
