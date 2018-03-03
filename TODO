@@ -14,5 +14,5 @@ Abilities
 
 Thoughts
 
-- I think that abilityEffectType Should split to AbilityEffectType and AbilityEffectTime
+[X] I think that abilityEffectType Should split to AbilityEffectType and AbilityEffectTime
   The type of the ability Immediate or Permanent and when is triggered in the game?

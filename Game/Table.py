@@ -60,7 +60,7 @@ class Table(object):
 
             print('------------------ Before start of turn actions, only load shield or develop talents')
             logger.info('------------------ Before start of turn actions, only load shield or develop talents')
-            
+
             if hasShieldsFaceDown or hasTalentsFaceDown:
                 logger.info('Current Player had shield or talents face down')
                 preAction = input('Do you want to take an action before the start of turn?(yes/no):')
@@ -78,7 +78,7 @@ class Table(object):
                     if card.ability:
                         card.ability.attachedCard = card
                         # self.reccuringEffects.add(card.ability)
-                        logger.info('Pre Actio, calling ActionResolver.handleAbility')
+                        logger.info('Pre Action, calling ActionResolver.handleAbility')
                         ActionResolver.handleAbility(self, card)
                     self.currentPlayer.energy_pool -= card.energy_cost
                     logger.info('Current Player energy pool: {0}'.format(self.currentPlayer.energy_pool))
@@ -123,7 +123,7 @@ class Table(object):
                 sys.stdout.write(ConsoleColors.Reset.value)
                 print('')
                 action = input('Select Action:')
-                # Check if the action can be executed , because of any card effect
+                # TODO Check if the action can be executed , because of any card effect
                 ActionResolver.resolveAction(
                     table = self,
                     action = action
