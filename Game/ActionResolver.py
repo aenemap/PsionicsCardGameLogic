@@ -43,32 +43,35 @@ class ActionResolver(object):
             #Player Initiates attack and he choses the amount of the attack
             #The amount will be substracted from his energy_pool
             logger.info('Player {0} chose the {1} action'.format(table.currentPlayer.name, TurnAction.InitiateAttack))
-            attack_value = input("How much energy to spend for the attack:")
-            attack_value = int(attack_value)
-            logger.info('Player Initiate Attack with an attack value of {0}'.format(attack_value))
-            table.currentPlayer.removeFromEnergyPool(attack_value)
-            attack_value = ActionResolver.shieldAreaResolution(table, attack_value)
+            table.attack_value = int(input("How much energy to spend for the attack:"))
+            logger.info('Player Initiate Attack with an attack value of {0}'.format(table.attack_value))
+            table.currentPlayer.removeFromEnergyPool(table.attack_value)
+            table.attack_value = ActionResolver.shieldAreaResolution(table)
             #if any attack pass the shield can be used to trash talents or attack the players health
-            print('Remain Attack after Shield Area:', attack_value)
-            if attack_value > 0:
-                attack_value = ActionResolver.talentAreaResolution(table, attack_value)
+            print('Remain Attack after Shield Area:', table.attack_value)
+            logger.info('Remain Attack after Shield Area:{0}'.format(table.attack_value))
+            if table.attack_value > 0:
+                table.attack_value = ActionResolver.talentAreaResolution(table)
 
-            print('Remain Attack after Talent Area:', attack_value)
-            if attack_value > 0:
+            print('Remain Attack after Talent Area:', table.attack_value)
+            logger.info('Remain Attack after Talent Area:{0}'.format(table.attack_value))
+            if table.attack_value > 0:
                 # any remain attack goes to player
-                print('Damage Opponent by {0}'.format(attack_value))
-                table.opposingPlayer.takeDamage(attack_value)
+                print('Damage Opponent by {0}'.format(table.attack_value))
+                logger.info('Damage Opponent by {0}'.format(table.attack_value))
+                table.opposingPlayer.takeDamage(table.attack_value)
         # elif action == TurnAction.Focus.value:
         #     table.currentPlayer.actionsPerTurn = table.currentPlayer.actionsPerTurn - 2
 
 
     @staticmethod
-    def shieldAreaResolution(table, attack_value):
+    def shieldAreaResolution(table):
         #if the opposingPlayer has shields currentPlayer chooses the shield to attack
         if len(table.opposingPlayer.playerArea[PlayerArea.Shields.value]) > 0:
             shieldToAttack = input("Choose a shield to attack (id):")
             shieldToAttack = int(shieldToAttack)
             shield = table.opposingPlayer.getCardFromPlayerArea(shieldToAttack, PlayerArea.Shields)
+            shield.logCard(shield)
             # substractFromAttackValue = None
             # if shield.sub_type == CardSubType.
             if shield.isFaceDown:
@@ -81,42 +84,61 @@ class ActionResolver(object):
                             logger.info('Shield {0} has ability'.format(shield.name))
                             logger.info('Adding ability to reccuringEffects')
                             ActionResolver.handleAbility(table, shield)
-                        table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.BeforeLoadShield)
+                        table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.BeforeLoadShield)
                         shield.isCardFaceDown(False)
-                        table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.AfterLoadShield)
-                        if attack_value >= shield.defence_value:
-                            table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.BeforeShieldAttack)
-                            attack_value -= shield.defence_value
-                            table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.AfterShieldAttack)
+                        table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.AfterLoadShield)
+                        # spendAttackValue = shield.defence_value if shield.sub_type == CardSubType.Basic else shield.absorbing_value
+                        spendAttackValue = 0
+                        print('CardSubType.Absorbing:', CardSubType.Absorbing)
+                        logger.info('shield.sub_type: {0}'.format(shield.sub_type))
+                        logger.info('shield.sub_type == CardSubType.Basic : {0}'.format(shield.sub_type == CardSubType.Basic))
+                        logger.info('shield.sub_type == CardSubType.Absorbing : {0}'.format(shield.sub_type == CardSubType.Absorbing))
+                        shield.logCard(shield)
+                        if shield.sub_type == CardSubType.Basic:
+                            spendAttackValue = shield.defence_value
+                        elif shield.sub_type == CardSubType.Absorbing:
+                            spendAttackValue = shield.absorbing_value
+
+                        logger.info('spendAttackValue:'.format(spendAttackValue))
+                        if table.attack_value >= spendAttackValue:
+                            table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.BeforeShieldAttack)
+                            if shield.sub_type == CardSubType.Basic:
+                                logger.info('Inside basic shield')
+                                table.attack_value -= spendAttackValue
+                            elif shield.sub_type == CardSubType.Absorbing:
+                                logger.info('Inside absorbing shield')
+                                table.attack_value -= spendAttackValue
+                                shield.isLoadedWithEnergy = True
+                            table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.AfterShieldAttack)
                             shield.removeConsistency(1)
                             if shield.consistency_value <=0:
                                 table.opposingPlayer.removeCardFromPlayerArea(shield.id, PlayerArea.Shields)
                                 table.clearEffect(card)
                         else:
-                            attack_value = 0
+                            table.attack_value = 0
                     else:
                         print('Opponent does not load the shield. Full attack pass')
-                        return attack_value
+                        return table.attack_value
                 else:
                     print('Opponent does not have the energy to load the shield. Full attack pass')
-                    return attack_value
+                    return table.attack_value
 
             else:
-                if attack_value >= shield.defence_value:
-                    table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.BeforeShieldAttack)
-                    attack_value -= shield.defence_value
-                    table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.AfterShieldAttack)
+                if table.attack_value >= shield.defence_value:
+                    table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.BeforeShieldAttack)
+                    table.attack_value -= shield.defence_value
+                    table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.AfterShieldAttack)
                     shield.removeConsistency(1)
                     if shield.consistency_value <=0:
                         table.opposingPlayer.removeCardFromPlayerArea(shield.id, PlayerArea.Shields)
                         table.clearEffect(card)
                 else:
-                    attack_value = 0
+                    table.attack_value = 0
 
-        return attack_value
+        return table.attack_value
 
     @staticmethod
-    def talentAreaResolution(table, attack_value):
+    def talentAreaResolution(table):
         # check if opposing player has any talents
         if len(table.opposingPlayer.playerArea[PlayerArea.Talents.value]) > 0:
             # hasFaceDownTalents = len(list(filter(lambda x : x.isFaceDown, opposingPlayer.playerArea[PlayerArea.Talents.value])))
@@ -129,33 +151,33 @@ class ActionResolver(object):
                     whichTalent = int(whichTalent)
                     talent = table.opposingPlayer.getCardFromPlayerArea(whichTalent, PlayerArea.Talents)
                     talent.isCardFaceDown(False)
-                    if talent.trash_value <= attack_value:
+                    if talent.trash_value <= table.attack_value:
                         #if you can trash it choose if you want
                         trashTalent = input('The trash cost of the talent card is {0}. Do you want to trash it? (yes/no)'.format(talent.trash_value))
                         if trashTalent == 'yes':
-                            table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.BeforeTrashTalent)
-                            attack_value = attack_value - talent.trash_value
+                            table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.BeforeTrashTalent)
+                            table.attack_value = table.attack_value - talent.trash_value
                             table.opposingPlayer.removeCardFromPlayerArea(talent.id, PlayerArea.Talents)
                             table.clearEffect(talent)
-                            table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.AfterTrashTalent)
+                            table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.AfterTrashTalent)
                         else:
                             talent.isCardFaceDown(True)
                     else:
                         print('You cannot trash the talent')
             # if the opponent doesnt have any hidden talents check if you can trash any of the revealed
-            canTrashTalents = len(list(filter(lambda x : x.trash_value <= attack_value and not x.isFaceDown, table.opposingPlayer.playerArea[PlayerArea.Talents.value])))
+            canTrashTalents = len(list(filter(lambda x : x.trash_value <= table.attack_value and not x.isFaceDown, table.opposingPlayer.playerArea[PlayerArea.Talents.value])))
             if canTrashTalents > 0:
                 trashTalent = input('Do you want to trash a talent ? (yes/no):')
                 if trashTalent == 'yes':
                     talentToTrash = int(input('Choose a talent to trash (id):'))
                     talent = table.opposingPlayer.getCardFromPlayerArea(talentToTrash, PlayerArea.Talents)
-                    table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.BeforeTrashTalent)
-                    attack_value = attack_value - talent.trash_value
+                    table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.BeforeTrashTalent)
+                    table.attack_value = table.attack_value - talent.trash_value
                     table.opposingPlayer.removeCardFromPlayerArea(talent.id, PlayerArea.Talents)
                     table.clearEffect(talent)
-                    table.reccuringEffects.invoke(table, attack_value, AbilityEffectTime.AfterTrashTalent)
+                    table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.AfterTrashTalent)
 
-        return attack_value
+        return table.attack_value
 
     @staticmethod
     def invokeAbility(card, args):

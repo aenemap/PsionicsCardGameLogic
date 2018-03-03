@@ -28,6 +28,7 @@ class ShieldCard(Card):
         self.isFaceDown = isFaceDown
         self.defence_value = None
         self.absorbing_value = None
+        self.isLoadedWithEnergy = False
         logger.info('Shield Card {0} Created'.format(self.name))
 
     def logCard(self, card):
@@ -60,7 +61,14 @@ class ShieldCard(Card):
             abilityDescription = ''
             if card.ability:
                 abilityDescription = card.ability.abilityDescription
-            print('id:{0} - Name:{1} - EnergyCost:{2} - Consistency:{3} - Ability:{4}'.format(card.id,card.name, card.energy_cost, card.consistency_value, abilityDescription))
+            print('id:{0} - Name:{1} - EnergyCost:{2} - DefenceValue:{3} - AbsorbingValue:{4} - Consistency:{5} - Ability:{6}'.format(
+                card.id,card.name,
+                card.energy_cost,
+                card.defence_value,
+                card.absorbing_value,
+                card.consistency_value,
+                abilityDescription
+            ))
 
 
 class TalentCard(Card):

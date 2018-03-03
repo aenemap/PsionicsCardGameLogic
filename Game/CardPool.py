@@ -9,7 +9,6 @@ logger.info('Creating the card pool')
 
 cardPool = []
 
-
 # oblivion = ShieldCard(
 #     id=0,
 #     name='Oblivion',
@@ -21,27 +20,27 @@ cardPool = []
 # oblivion.defence_value = 2
 # cardPool.append(oblivion)
 #
-barrage = ShieldCard(
-    id=0,
-    name='Barrage',
-    type= CardType.Shield,
-    sub_type=CardSubType.Basic,
-    energy_cost= 2,
-    consistency_value= 2,
-    isFaceDown=True)
-barrage.defence_value=1
-cardPool.append(barrage)
-#
-# colossus = ShieldCard(
+# barrage = ShieldCard(
 #     id=0,
-#     name='Colossus',
+#     name='Barrage',
 #     type= CardType.Shield,
 #     sub_type=CardSubType.Basic,
-#     energy_cost= 4,
-#     consistency_value= 3,
+#     energy_cost= 2,
+#     consistency_value= 2,
 #     isFaceDown=True)
-# colossus.defence_value=3
-# cardPool.append(colossus)
+# barrage.defence_value=1
+# cardPool.append(barrage)
+#
+colossus = ShieldCard(
+    id=0,
+    name='Colossus',
+    type=CardType.Shield,
+    sub_type=CardSubType.Absorbing,
+    energy_cost= 4,
+    consistency_value= 3,
+    isFaceDown=True)
+colossus.absorbing_value=3
+cardPool.append(colossus)
 #
 # doomWall = ShieldCard(
 #     id=0,
@@ -54,17 +53,17 @@ cardPool.append(barrage)
 # doomWall.defence_value=3
 # cardPool.append(doomWall)
 #
-nightbane = ShieldCard(
-    id=0,
-    name='Nightbane',
-    type= CardType.Shield,
-    sub_type=CardSubType.Basic,
-    energy_cost= 0,
-    consistency_value= 0,
-    isFaceDown=True)
-nightbane.defence_value=3
-nightbane.ability = NightBaneAbility(nightbane)
-cardPool.append(nightbane)
+# nightbane = ShieldCard(
+#     id=0,
+#     name='Nightbane',
+#     type= CardType.Shield,
+#     sub_type=CardSubType.Basic,
+#     energy_cost= 0,
+#     consistency_value= 0,
+#     isFaceDown=True)
+# nightbane.defence_value=3
+# nightbane.ability = NightBaneAbility(nightbane)
+# cardPool.append(nightbane)
 #
 # behemoth = ShieldCard(
 #     id=0,
@@ -133,3 +132,12 @@ cardPool.append(echo)
 # )
 # testCard.ability = WhenLoadsShieldGainEnergy(testCard, 2)
 # cardPool.append(testCard)
+Icarius = EventCard(
+    id = 0,
+    name = 'Icarius',
+    type = CardType.Event,
+    sub_type=None,
+    energy_cost=3
+)
+Icarius.ability = IcariusAbility(Icarius)
+cardPool.append(Icarius)

@@ -21,6 +21,7 @@ class Table(object):
         self.reccuringEffects = None
         self.commandQueue = deque([])
         self.actionsPerTurn = 4
+        self.attack_value = 0
 
 
 

@@ -143,3 +143,16 @@ class WhenLoadsShieldGainEnergy(Ability):
                 if playerHasCard > 0:
                     if not self.attachedCard.isFaceDown:
                         player.energy_pool += self.amount
+
+class IcariusAbility(Ability):
+
+    def __init__(self, attachedCard):
+        description = 'Initiate an Attack of 3 energy. If the attack passed a loaded absorbing shield then add the load amount to this attack.'
+        abilityArgs = [AbilityArgType.Card, AbilityArgType.AttackValue]
+        Ability.__init__(self, 'IcariusAbility', description, 1, AbilityEffectTime.AfterShieldAttack, AbilityEffectType.Immediate, abilityArgs, attachedCard)
+
+    def invoke(self, card, attack_value):
+        if card:
+            if card.CardType == CardType.Shield and card.CardSubType == CardSubType.Absorbing:
+                if card.isLoadedWithEnergy:
+                    attack_value += card.absorbing_value
