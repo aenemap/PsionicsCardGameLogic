@@ -4,11 +4,11 @@ logger = logging.getLogger(__name__)
 
 class Card(object):
 
-    def __init__(self, id, name, type, sub_type, energy_cost):
+    def __init__(self, id, name, type, subType, energy_cost):
         self.id =id
         self.name = name
         self.type = type
-        self.sub_type = sub_type,
+        self.subType = subType,
         self.energy_cost = energy_cost
         self.uniqueCardId = None
         self.ability = None
@@ -22,8 +22,8 @@ class Card(object):
 
 class ShieldCard(Card):
 
-    def __init__(self, id, name, type, sub_type, energy_cost, consistency_value, isFaceDown):
-        Card.__init__(self, id, name, type, sub_type, energy_cost)
+    def __init__(self, id, name, type, subType, energy_cost, consistency_value, isFaceDown):
+        Card.__init__(self, id, name, type, subType, energy_cost)
         self.consistency_value = consistency_value
         self.isFaceDown = isFaceDown
         self.defence_value = None
@@ -36,7 +36,7 @@ class ShieldCard(Card):
         logger.info('Id:{0}'.format(self.id))
         logger.info('Name:{0}'.format(self.name))
         logger.info('Type:{0}'.format(self.type))
-        logger.info('Sub Type:{0}'.format(self.sub_type))
+        logger.info('Sub Type:{0}'.format(self.subType))
         logger.info('Energy Cost:{0}'.format(self.energy_cost))
         logger.info('Consistency Value:{0}'.format(self.consistency_value))
         logger.info('Is Facedown:{0}'.format(self.isFaceDown))
@@ -72,8 +72,8 @@ class ShieldCard(Card):
 
 
 class TalentCard(Card):
-    def __init__(self, id, name, type, sub_type, energy_cost, trash_value, isFaceDown):
-        Card.__init__(self, id, name, type, sub_type, energy_cost)
+    def __init__(self, id, name, type, subType, energy_cost, trash_value, isFaceDown):
+        Card.__init__(self, id, name, type, subType, energy_cost)
         self.trash_value = trash_value
         self.isFaceDown = isFaceDown
         logger.info('Talent Card {0} Created'.format(self.name))
@@ -86,7 +86,7 @@ class TalentCard(Card):
         logger.info('Id:{0}'.format(self.id))
         logger.info('Name:{0}'.format(self.name))
         logger.info('Type:{0}'.format(self.type))
-        logger.info('Sub Type:{0}'.format(self.sub_type))
+        logger.info('Sub Type:{0}'.format(self.subType))
         logger.info('Energy Cost:{0}'.format(self.energy_cost))
         logger.info('Is Facedown:{0}'.format(self.isFaceDown))
         logger.info('Trash Value:{0}'.format(self.trash_value))
@@ -105,8 +105,8 @@ class TalentCard(Card):
 
 
 class EventCard(Card):
-    def __init__(self, id, name, type, sub_type, energy_cost):
-        Card.__init__(self, id, name, type, sub_type, energy_cost)
+    def __init__(self, id, name, type, subType, energy_cost):
+        Card.__init__(self, id, name, type, subType, energy_cost)
         self.isFaceDown = False
 
     def logCard(self, card):
@@ -114,7 +114,7 @@ class EventCard(Card):
         logger.info('Id:{0}'.format(self.id))
         logger.info('Name:{0}'.format(self.name))
         logger.info('Type:{0}'.format(self.type))
-        logger.info('Sub Type:{0}'.format(self.sub_type))
+        logger.info('Sub Type:{0}'.format(self.subType))
         logger.info('Energy Cost:{0}'.format(self.energy_cost))
         logger.info('-------------------------------------------------')
 

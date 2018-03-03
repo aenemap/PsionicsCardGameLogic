@@ -13,7 +13,7 @@ cardPool = []
 #     id=0,
 #     name='Oblivion',
 #     type= CardType.Shield,
-#     sub_type=CardSubType.Basic,
+#     subType=CardSubType.Basic,
 #     energy_cost= 3,
 #     consistency_value= 3,
 #     isFaceDown=True)
@@ -24,7 +24,7 @@ cardPool = []
 #     id=0,
 #     name='Barrage',
 #     type= CardType.Shield,
-#     sub_type=CardSubType.Basic,
+#     subType=CardSubType.Basic,
 #     energy_cost= 2,
 #     consistency_value= 2,
 #     isFaceDown=True)
@@ -35,7 +35,7 @@ colossus = ShieldCard(
     id=0,
     name='Colossus',
     type=CardType.Shield,
-    sub_type=CardSubType.Absorbing,
+    subType=CardSubType.Absorbing,
     energy_cost= 4,
     consistency_value= 3,
     isFaceDown=True)
@@ -46,7 +46,7 @@ cardPool.append(colossus)
 #     id=0,
 #     name='Doom Wall',
 #     type= CardType.Shield,
-#     sub_type=CardSubType.Basic,
+#     subType=CardSubType.Basic,
 #     energy_cost= 3,
 #     consistency_value= 2,
 #     isFaceDown=True)
@@ -57,7 +57,7 @@ cardPool.append(colossus)
 #     id=0,
 #     name='Nightbane',
 #     type= CardType.Shield,
-#     sub_type=CardSubType.Basic,
+#     subType=CardSubType.Basic,
 #     energy_cost= 0,
 #     consistency_value= 0,
 #     isFaceDown=True)
@@ -69,7 +69,7 @@ cardPool.append(colossus)
 #     id=0,
 #     name='Behemoth',
 #     type= CardType.Shield,
-#     sub_type=CardSubType.Absorbing,
+#     subType=CardSubType.Absorbing,
 #     energy_cost= 4,
 #     consistency_value= 0,
 #     isFaceDown=True)
@@ -81,7 +81,7 @@ cardPool.append(colossus)
 #     id=0,
 #     name='Ivory',
 #     type= CardType.Shield,
-#     sub_type=CardSubType.Mirror,
+#     subType=CardSubType.Mirror,
 #     energy_cost= 4,
 #     consistency_value= 3,
 #     isFaceDown=True)
@@ -93,7 +93,7 @@ echo = TalentCard(
     id=0,
     name='Echo',
     type= CardType.Talent,
-    sub_type=None,
+    subType=None,
     energy_cost= 2,
     trash_value=2,
     isFaceDown=True
@@ -105,7 +105,7 @@ cardPool.append(echo)
 #     id=0,
 #     name='Change',
 #     type= CardType.Event,
-#     sub_type=None,
+#     subType=None,
 #     energy_cost= 3
 # )
 # change.ability = ImmediateGainEnergy(change, 7)
@@ -115,7 +115,7 @@ cardPool.append(echo)
 #     id=0,
 #     name='Life Source',
 #     type= CardType.Event,
-#     sub_type=None,
+#     subType=None,
 #     energy_cost= 0
 # )
 # lifeSource.ability = ImmediateGainHealth(lifeSource, 5)
@@ -125,7 +125,7 @@ cardPool.append(echo)
 #     id=0,
 #     name='testCard',
 #     type= CardType.Talent,
-#     sub_type=None,
+#     subType=None,
 #     energy_cost= 2,
 #     trash_value=2,
 #     isFaceDown=True
@@ -136,7 +136,7 @@ Icarius = EventCard(
     id = 0,
     name = 'Icarius',
     type = CardType.Event,
-    sub_type=None,
+    subType=None,
     energy_cost=3
 )
 Icarius.ability = IcariusAbility(Icarius)
