@@ -1,5 +1,7 @@
 from Game.Ability import Ability
 from Game.Enums import *
+from Game.Actions import *
+from Game.ActionResolver import *
 import math
 import logging
 
@@ -148,11 +150,12 @@ class IcariusAbility(Ability):
 
     def __init__(self, attachedCard):
         description = 'Initiate an Attack of 3 energy. If the attack passed a loaded absorbing shield then add the load amount to this attack.'
-        abilityArgs = [AbilityArgType.Card, AbilityArgType.AttackValue]
-        Ability.__init__(self, 'IcariusAbility', description, 1, AbilityEffectTime.AfterShieldAttack, AbilityEffectType.Immediate, abilityArgs, attachedCard)
+        abilityArgs = [AbilityArgType.Table, AbilityArgType.Card]
+        Ability.__init__(self, 'IcariusAbility', description, 1, AbilityEffectTime.OnPlay, AbilityEffectType.Immediate, abilityArgs, attachedCard)
 
-    def invoke(self, card, attack_value):
-        if card:
-            if card.type == CardType.Shield and card.subType[0] == CardSubType.Absorbing:
-                if card.isLoadedWithEnergy:
-                    attack_value += card.absorbing_value
+    def invoke(self, table, card):
+        if table:
+            table.attack_value = 3
+            actionResolver = ActionResolver()
+            initiateAttackAction = InitiateAttackAction()
+            initiateAttackAction.initiateAttack(table, actionResolver.handleAbility)

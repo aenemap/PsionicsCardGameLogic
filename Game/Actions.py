@@ -49,8 +49,9 @@ class InitiateAttackAction(object):
     def initiateAttack(self, table, handleAbility):
         #The amount will be substracted from his energy_pool
         logger.info('Player {0} chose the {1} action'.format(table.currentPlayer.name, TurnAction.InitiateAttack))
-        table.attack_value = int(input("How much energy to spend for the attack:"))
-        logger.info('Player Initiate Attack with an attack value of {0}'.format(table.attack_value))
+        if table.attack_value == 0:
+            table.attack_value = int(input("How much energy to spend for the attack:"))
+            logger.info('Player Initiate Attack with an attack value of {0}'.format(table.attack_value))
         table.currentPlayer.removeFromEnergyPool(table.attack_value)
         table.attack_value = self.shieldAreaResolution(table)
         #if any attack pass the shield can be used to trash talents or attack the players health
