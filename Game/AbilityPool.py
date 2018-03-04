@@ -153,6 +153,6 @@ class IcariusAbility(Ability):
 
     def invoke(self, card, attack_value):
         if card:
-            if card.CardType == CardType.Shield and card.CardSubType == CardSubType.Absorbing:
+            if card.type == CardType.Shield and card.subType[0] == CardSubType.Absorbing:
                 if card.isLoadedWithEnergy:
                     attack_value += card.absorbing_value

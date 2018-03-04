@@ -20,7 +20,7 @@ cardPool = []
 # oblivion.defence_value = 2
 # cardPool.append(oblivion)
 #
-# barrage = ShieldCard(
+# barrage = BasicShield(
 #     id=0,
 #     name='Barrage',
 #     type= CardType.Shield,
@@ -30,8 +30,8 @@ cardPool = []
 #     isFaceDown=True)
 # barrage.defence_value=1
 # cardPool.append(barrage)
-#
-colossus = ShieldCard(
+# #
+colossus = AbsorbingShield(
     id=0,
     name='Colossus',
     type=CardType.Shield,

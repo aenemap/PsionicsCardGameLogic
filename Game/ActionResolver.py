@@ -1,6 +1,7 @@
 from Game.Enums import *
 from Game.Ability import Ability
 from Game.Actions import *
+from Game.Card import *
 import logging
 
 logger = logging.getLogger(__name__)
@@ -22,7 +23,7 @@ class ActionResolver(object):
             cardIdToPlay = input("Select card from Hand(id):")
             cardIdToPlay = int(cardIdToPlay)
             cardToPlay = table.currentPlayer.hand.getCardFromHand(cardIdToPlay)
-            logger.info('Player chose the {} card to play'.format(cardToPlay.name))
+            logger.info('Player chose the {0} card to play'.format(cardToPlay.name))
             cardToPlay.logCard(cardToPlay)
             if cardToPlay:
                 if not cardToPlay.isFaceDown:
@@ -87,25 +88,15 @@ class ActionResolver(object):
                         table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.BeforeLoadShield)
                         shield.isCardFaceDown(False)
                         table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.AfterLoadShield)
-                        # spendAttackValue = shield.defence_value if shield.subType == CardSubType.Basic else shield.absorbing_value
-                        spendAttackValue = 0
-                        print('CardSubType.Absorbing:', CardSubType.Absorbing)
-                        logger.info('shield.subType: {0}'.format(shield.subType))
-                        logger.info('shield.subType == CardSubType.Basic : {0}'.format(shield.subType == CardSubType.Basic))
-                        logger.info('shield.subType == CardSubType.Absorbing : {0}'.format(shield.subType == CardSubType.Absorbing))
-                        shield.logCard(shield)
-                        if shield.subType == CardSubType.Basic:
-                            spendAttackValue = shield.defence_value
-                        elif shield.subType == CardSubType.Absorbing:
-                            spendAttackValue = shield.absorbing_value
+                        spendAttackValue = shield.defence_value if shield.subType[0] == CardSubType.Basic else shield.absorbing_value
 
-                        logger.info('spendAttackValue:'.format(spendAttackValue))
+                        logger.info('spendAttackValue:{0}'.format(spendAttackValue))
                         if table.attack_value >= spendAttackValue:
                             table.reccuringEffects.invoke(table, table.attack_value, AbilityEffectTime.BeforeShieldAttack)
-                            if shield.subType == CardSubType.Basic:
+                            if shield.subType[0] == CardSubType.Basic:
                                 logger.info('Inside basic shield')
                                 table.attack_value -= spendAttackValue
-                            elif shield.subType == CardSubType.Absorbing:
+                            elif shield.subType[0] == CardSubType.Absorbing:
                                 logger.info('Inside absorbing shield')
                                 table.attack_value -= spendAttackValue
                                 shield.isLoadedWithEnergy = True

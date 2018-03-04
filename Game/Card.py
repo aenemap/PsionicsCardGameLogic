@@ -20,15 +20,13 @@ class Card(object):
     def logCard(self, card):
         self.logCard(card)
 
-class ShieldCard(Card):
+class BasicShield(Card):
 
     def __init__(self, id, name, type, subType, energy_cost, consistency_value, isFaceDown):
         Card.__init__(self, id, name, type, subType, energy_cost)
         self.consistency_value = consistency_value
         self.isFaceDown = isFaceDown
         self.defence_value = None
-        self.absorbing_value = None
-        self.isLoadedWithEnergy = False
         logger.info('Shield Card {0} Created'.format(self.name))
 
     def logCard(self, card):
@@ -36,12 +34,11 @@ class ShieldCard(Card):
         logger.info('Id:{0}'.format(self.id))
         logger.info('Name:{0}'.format(self.name))
         logger.info('Type:{0}'.format(self.type))
-        logger.info('Sub Type:{0}'.format(self.subType))
+        logger.info('Sub Type:{0}'.format(self.subType[0]))
         logger.info('Energy Cost:{0}'.format(self.energy_cost))
         logger.info('Consistency Value:{0}'.format(self.consistency_value))
         logger.info('Is Facedown:{0}'.format(self.isFaceDown))
         logger.info('Defence Value:{0}'.format(self.defence_value))
-        logger.info('Absorbing Value:{0}'.format(self.absorbing_value))
         logger.info('-------------------------------------------------')
 
 
@@ -61,14 +58,23 @@ class ShieldCard(Card):
             abilityDescription = ''
             if card.ability:
                 abilityDescription = card.ability.abilityDescription
-            print('id:{0} - Name:{1} - EnergyCost:{2} - DefenceValue:{3} - AbsorbingValue:{4} - Consistency:{5} - Ability:{6}'.format(
+            print('id:{0} - Name:{1} - EnergyCost:{2} - DefenceValue:{3} - AbsorbingValue:{4} - isLoadedWithEnergy:{5} - Consistency:{6} - Ability:{7}'.format(
                 card.id,card.name,
                 card.energy_cost,
                 card.defence_value,
-                card.absorbing_value,
+                card.absorbing_value if hasattr(card,'absorbing_value') else None,
+                card.isLoadedWithEnergy if hasattr(card, 'isLoadedWithEnergy') else None,
                 card.consistency_value,
                 abilityDescription
             ))
+
+class AbsorbingShield(BasicShield):
+
+    def __init__(self, id, name, type, subType, energy_cost, consistency_value, isFaceDown):
+        BasicShield.__init__(self, id, name, type, subType, energy_cost, consistency_value, isFaceDown)
+        self.absorbing_value = None
+        self.isLoadedWithEnergy = False
+
 
 
 class TalentCard(Card):
