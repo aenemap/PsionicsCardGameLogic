@@ -31,6 +31,7 @@ class Table(object):
         logger.info('#################################################################################')
         logger.info('#################################################################################')
         logger.info('STARTING THE GAME')
+        actionResolver = ActionResolver()
         startPlayer = 1
         logger.info('Start initiating pools for game effects')
         self.startOfTurnEffects = StartOfTurn()
@@ -80,7 +81,7 @@ class Table(object):
                         card.ability.attachedCard = card
                         # self.reccuringEffects.add(card.ability)
                         logger.info('Pre Action, calling ActionResolver.handleAbility')
-                        ActionResolver.handleAbility(self, card)
+                        actionResolver.handleAbility(self, card)
                     self.currentPlayer.energy_pool -= card.energy_cost
                     logger.info('Current Player energy pool: {0}'.format(self.currentPlayer.energy_pool))
                     self.printTable()
@@ -124,7 +125,7 @@ class Table(object):
                 print('')
                 action = input('Select Action:')
                 # TODO Check if the action can be executed , because of any card effect
-                ActionResolver.resolveAction(
+                actionResolver.resolveAction(
                     table = self,
                     action = action
                     )
