@@ -46,6 +46,7 @@ class AbilityEffectTime(Enum):
     AfterLoadTalent = 'AfterLoadTalent'
     BeforeTrashTalent = 'BeforeTrashTalent'
     AfterTrashTalent = 'AfterTrashTalent'
+    OnSuccessfulAttack = 'OnSuccessfulAttack'
 
 class AbilityArgType(Enum):
     CardOwner = 'CardOwner'
@@ -53,7 +54,8 @@ class AbilityArgType(Enum):
     OpposingPlayer = 'OpposingPlayer'
     BothPlayers = 'BothPlayers'
     Table = 'Table'
-    Card = 'Card'
+    Card = 'Card',
+    TargetCard = 'TargetCard',
     AttackValue = 'AttackValue'
 
 class ConsoleColors(Enum):

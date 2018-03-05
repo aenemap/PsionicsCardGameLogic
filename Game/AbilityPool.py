@@ -44,7 +44,7 @@ class GainHealthAtEndOfTurn(Ability):
                     if not self.attachedCard.isFaceDown:
                         player.health += self.amount
 
-class GainEnergyAtStartOfRound(Ability):
+class GainEnergyAtStartOfTurn(Ability):
 
     def __init__(self, attachedCard, amount):
         description = 'Gain {0} energy at the start of your turn'.format(amount)
@@ -146,16 +146,32 @@ class WhenLoadsShieldGainEnergy(Ability):
                     if not self.attachedCard.isFaceDown:
                         player.energy_pool += self.amount
 
-class IcariusAbility(Ability):
+class IcariusInitiateAttackAbility(Ability):
 
     def __init__(self, attachedCard):
-        description = 'Initiate an Attack of 3 energy. If the attack passed a loaded absorbing shield then add the load amount to this attack.'
-        abilityArgs = [AbilityArgType.Table, AbilityArgType.Card]
-        Ability.__init__(self, 'IcariusAbility', description, 1, AbilityEffectTime.OnPlay, AbilityEffectType.Immediate, abilityArgs, attachedCard)
+        description = 'Initiate an Attack of 3 energy. If the attack passed a loaded absorbing shield, unload it and  add the energy amount to this attack.'
+        Ability.__init__(self, 'IcariusInitiateAttackAbility', description, 1, AbilityEffectTime.OnPlay, AbilityEffectType.Immediate, AbilityArgType.Table, attachedCard)
 
-    def invoke(self, table, card):
+    def invoke(self, table):
         if table:
             table.attack_value = 3
             actionResolver = ActionResolver()
             initiateAttackAction = InitiateAttackAction()
             initiateAttackAction.initiateAttack(table, actionResolver.handleAbility)
+
+class IcariusAddAmountIfAbsorbing(Ability):
+    def __init__(self, attachedCard):
+        abilityArgs = [AbilityArgType.Table, AbilityArgType.TargetCard]
+        Ability.__init__(self, 'IcariusAddAmountIfAbsorbing', '', 1, AbilityEffectTime.AfterShieldAttack, AbilityEffectType.Immediate, abilityArgs, attachedCard)
+
+    def invoke(self, table, card):
+        logger.info('Invoking {0}'.format(self.name))
+        if table:
+            if card:
+                logger.info('{0}: checks if the card is of type absorbing'.format(self.name))
+                if card.subType[0] == CardSubType.Absorbing:
+                    logger.info('{0}: attack before modification: {1}'.format(self.name, table.attack_value))
+                    table.attack_value += card.absorbing_value
+                    logger.info('{0}: attack after modification: {1}'.format(self.name, table.attack_value))
+                    logger.info('{0}: {1} is no longer loaded with energy'.format(self.name, card.name))
+                    card.isLoadedWithEnergy = False

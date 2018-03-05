@@ -11,7 +11,7 @@ class Card(object):
         self.subType = subType,
         self.energy_cost = energy_cost
         self.uniqueCardId = None
-        self.ability = None
+        self.abilities = []
 
 
     def printCard(self, card):
@@ -56,8 +56,9 @@ class BasicShield(Card):
             print('id:{0} - Shield card face down'.format(card.id))
         else:
             abilityDescription = ''
-            if card.ability:
-                abilityDescription = card.ability.abilityDescription
+            if len(card.abilities) > 0:
+                for ab in card.abilities:
+                    abilityDescription += ab.abilityDescription
             print('id:{0} - Name:{1} - EnergyCost:{2} - DefenceValue:{3} - AbsorbingValue:{4} - isLoadedWithEnergy:{5} - Consistency:{6} - Ability:{7}'.format(
                 card.id,card.name,
                 card.energy_cost,
@@ -105,8 +106,9 @@ class TalentCard(Card):
             print('id:{0} - Talent card face down'.format(card.id))
         else:
             abilityDescription = ''
-            if card.ability:
-                abilityDescription = card.ability.abilityDescription
+            if len(card.abilities) > 0:
+                for ab in card.abilities:
+                    abilityDescription += ab.abilityDescription
             print('id:{0} - Name:{1} - EnergyCost:{2} - Trash:{3} - Ability:{4}'.format(card.id, card.name, card.energy_cost, card.trash_value, abilityDescription))
 
 
@@ -125,7 +127,8 @@ class EventCard(Card):
         logger.info('-------------------------------------------------')
 
     def printCard(self, card):
-        abilityDescription = ''
-        if card.ability:
-            abilityDescription = card.ability.abilityDescription
+        abilityDescription = ''        
+        if len(card.abilities) > 0:
+            for ab in card.abilities:
+                abilityDescription += ab.abilityDescription
         print('id:{0} - Name:{1} - EnergyCost:{2}  - Ability:{3}'.format(card.id,card.name, card.energy_cost, abilityDescription))

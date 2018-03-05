@@ -32,28 +32,24 @@ class ActionResolver(object):
             initateAttackAction.initiateAttack(table, self.handleAbility)
 
 
-    def invokeAbility(self, card, args):
-        if isinstance(args, list):
-            card.ability.invoke(*args)
-        else:
-            card.ability.invoke(args)
+    # def invokeAbility(self, card, args):
+    #     if isinstance(args, list):
+    #         card.ability.invoke(*args)
+    #     else:
+    #         card.ability.invoke(args)
 
 
     def handleAbility(self, table, card):
-        logger.info('handleAbility => card.ability.abilityEffectTime =>{0}'.format(card.ability.abilityEffectTime))
-        if card.ability.abilityEffectTime == AbilityEffectTime.StartOfTurn:
-            logger.info('handleAbility => adding card to startOfTurnEffects')
-            table.startOfTurnEffects.add(card.ability)
-        elif card.ability.abilityEffectTime == AbilityEffectTime.EndOfTurn:
-            logger.info('handleAbility => adding card to endOfTurnEffects')
-            table.endOfTurnEffects.add(card.ability)
-        elif card.ability.abilityEffectType == AbilityEffectType.Reccuring:
-            logger.info('handleAbility => adding card to reccuringEffects')
-            table.reccuringEffects.add(card.ability)
-        elif card.ability.abilityEffectTime == AbilityEffectTime.OnPlay and card.ability.abilityEffectType == AbilityEffectType.Reccuring:
-            logger.info('handleAbility => adding card to reccuringEffects')
-            table.reccuringEffects.add(card.ability)
-        elif card.ability.abilityEffectTime == AbilityEffectTime.OnPlay and card.ability.abilityEffectType == AbilityEffectType.Immediate:
-            logger.info('handleAbility => invoking ability')
-            abilityArgs = card.ability.getArgsForAbility(table, card, None)
-            self.invokeAbility(card, abilityArgs)
+        logger.info('handleAbility => card.abilities =>{0}'.format(card.abilities))
+        logger.info('Adding effects to gameEffects pool')
+        for ability in card.abilities:
+            ability.attachedCard = card
+            table.gameEffects.add(ability)
+        logger.info('handleAbility => gameEffects => {0}'.format(table.gameEffects))
+        logger.info('Calling gameEffects.invoke')
+        table.gameEffects.invoke(
+            table=table,
+            abilityEffectTime = AbilityEffectTime.OnPlay,
+            abilityEffectType = AbilityEffectType.Immediate,
+            targetCard = None
+        )

@@ -16,9 +16,10 @@ class Table(object):
         self.player2 = player2
         self.currentPlayer = None
         self.opposingPlayer = None
-        self.startOfTurnEffects = None
-        self.endOfTurnEffects = None
-        self.reccuringEffects = None
+        self.gameEffects = None
+        # self.startOfTurnEffects = None
+        # self.endOfTurnEffects = None
+        # self.reccuringEffects = None
         self.commandQueue = deque([])
         self.actionsPerTurn = 4
         self.attack_value = 0
@@ -34,9 +35,10 @@ class Table(object):
         actionResolver = ActionResolver()
         startPlayer = 1
         logger.info('Start initiating pools for game effects')
-        self.startOfTurnEffects = StartOfTurn()
-        self.endOfTurnEffects = EndOfTurn()
-        self.reccuringEffects = ReccurringEffects()
+        self.gameEffects = GameEffects()
+        # self.startOfTurnEffects = StartOfTurn()
+        # self.endOfTurnEffects = EndOfTurn()
+        # self.reccuringEffects = ReccurringEffects()
         logger.info('End initiating pools for game effects')
 
         # print('Starting Player is Player Number {0}'.format(startPlayer))
@@ -77,10 +79,10 @@ class Table(object):
                     card = self.currentPlayer.getCardFromPlayerArea(whichCard, cardArea)
                     card.logCard(card)
                     card.isFaceDown = False
-                    if card.ability:
-                        card.ability.attachedCard = card
-                        # self.reccuringEffects.add(card.ability)
-                        logger.info('Pre Action, calling ActionResolver.handleAbility')
+                    if len(card.abilites) > 0:
+                        for ability in card.abilities:
+                            ability.attachedCard = card
+                        logger.info('Calling handleAbility from pre actions')
                         actionResolver.handleAbility(self, card)
                     self.currentPlayer.energy_pool -= card.energy_cost
                     logger.info('Current Player energy pool: {0}'.format(self.currentPlayer.energy_pool))
@@ -94,10 +96,12 @@ class Table(object):
 
             #Start Of Turn Effects
             logger.info('----------------------------- START OF TURN EFFECTS -----------------------')
-            logger.info('startOfTurnEffects length: {0}'.format(self.startOfTurnEffects.getLength()))
-            if self.startOfTurnEffects.getLength() > 0:
-                print('------------ Start Of Turn Effects --------------')
-                self.startOfTurnEffects.invoke(self)
+            self.gameEffects.invoke(
+                table=self,
+                abilityEffectTime = AbilityEffectTime.StartOfTurn,
+                abilityEffectType = None,
+                targetCard=None
+            )
             print('------------ Start Of Turn Effects Complete --------------')
             logger.info('----------------------------- START OF TURN EFFECTS COMPLETE-----------------------')
 
@@ -139,10 +143,12 @@ class Table(object):
 
             #End Of Turn Effects
             logger.info('------------------------------ END OF TURN EFFECTS ---------------------------')
-            logger.info('endOfTurnEffects length: {0}'.format(self.endOfTurnEffects.getLength()))
-            if self.endOfTurnEffects.getLength() > 0:
-                print('------------ End Of Turn Effects --------------')
-                self.endOfTurnEffects.invoke(self)
+            self.gameEffects.invoke(
+                table=self,
+                abilityEffectTime = AbilityEffectTime.EndOfTurn,
+                abilityEffectType = None,
+                targetCard= None
+            )
             print('------------ End Of Turn Effects Complete --------------')
             logger.info('------------------------------ END OF TURN EFFECTS COMPLETE---------------------------')
 
@@ -156,12 +162,9 @@ class Table(object):
                 self.opposingPlayer = self.player2
 
     def clearEffect(self, card):
-        if card.ability.abilityEffectTime == AbilityEffectTime.StartOfTurn:
-            self.startOfTurnEffects.removeEffect(card)
-        elif card.ability.abilityEffectTime == AbilityEffectTime.EndOfTurn:
-            self.endOfTurnEffects.removeEffect(card)
-        else:
-            self.reccuringEffects.removeEffect(card)
+        if len(card.abilities) > 0:
+            for ability in card.abilities:
+                self.gameEffects.removeEffect(ability)
 
 
 

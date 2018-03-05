@@ -39,10 +39,10 @@ colossus = AbsorbingShield(
     energy_cost= 4,
     consistency_value= 3,
     isFaceDown=True)
-colossus.absorbing_value=3
+colossus.absorbing_value=2
 cardPool.append(colossus)
 #
-# doomWall = ShieldCard(
+# doomWall = BasicShield(
 #     id=0,
 #     name='Doom Wall',
 #     type= CardType.Shield,
@@ -50,7 +50,7 @@ cardPool.append(colossus)
 #     energy_cost= 3,
 #     consistency_value= 2,
 #     isFaceDown=True)
-# doomWall.defence_value=3
+# doomWall.defence_value=2
 # cardPool.append(doomWall)
 #
 # nightbane = ShieldCard(
@@ -89,17 +89,17 @@ cardPool.append(colossus)
 # ivory.ability = IvoryAbility(ivory)
 # cardPool.append(ivory)
 
-echo = TalentCard(
-    id=0,
-    name='Echo',
-    type= CardType.Talent,
-    subType=None,
-    energy_cost= 2,
-    trash_value=2,
-    isFaceDown=True
-)
-echo.ability = GainHealthAtEndOfTurn(echo, 1)
-cardPool.append(echo)
+# echo = TalentCard(
+#     id=0,
+#     name='Echo',
+#     type= CardType.Talent,
+#     subType=None,
+#     energy_cost= 2,
+#     trash_value=2,
+#     isFaceDown=True
+# )
+# echo.ability = GainHealthAtStartOfTurn(echo, 1)
+# cardPool.append(echo)
 
 # change = EventCard(
 #     id=0,
@@ -128,10 +128,11 @@ cardPool.append(echo)
 #     subType=None,
 #     energy_cost= 2,
 #     trash_value=2,
-#     isFaceDown=True
+#     isFaceDown=False
 # )
-# testCard.ability = WhenLoadsShieldGainEnergy(testCard, 2)
+# testCard.abilities.append(WhenLoadsShieldGainEnergy(testCard, 2))
 # cardPool.append(testCard)
+
 Icarius = EventCard(
     id = 0,
     name = 'Icarius',
@@ -139,5 +140,6 @@ Icarius = EventCard(
     subType=None,
     energy_cost=3
 )
-Icarius.ability = IcariusAbility(Icarius)
+Icarius.abilities.append(IcariusInitiateAttackAbility(Icarius))
+Icarius.abilities.append(IcariusAddAmountIfAbsorbing(Icarius))
 cardPool.append(Icarius)
