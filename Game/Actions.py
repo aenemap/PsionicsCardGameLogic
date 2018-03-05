@@ -70,7 +70,7 @@ class InitiateAttackAction(object):
             table=table,
             abilityEffectTime = AbilityEffectTime.OnSuccessfulAttack,
             abilityEffectType = None,
-            targetCard = shield
+            targetCard = None
         )
 
     def shieldAreaResolution(self, table):
