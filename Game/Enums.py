@@ -33,6 +33,7 @@ class AbilityEffectType(Enum):
     Immediate = 'Immediate'
     Reccuring = 'Reccuring'
     Permanent = 'Permanent'
+    Once = 'Once'
 
 class AbilityEffectTime(Enum):
     OnPlay = 'OnPlay'

@@ -17,12 +17,9 @@ class Table(object):
         self.currentPlayer = None
         self.opposingPlayer = None
         self.gameEffects = None
-        # self.startOfTurnEffects = None
-        # self.endOfTurnEffects = None
-        # self.reccuringEffects = None
-        self.commandQueue = deque([])
         self.actionsPerTurn = 4
         self.attack_value = 0
+        self.turnCounter = 0
 
 
 
@@ -48,13 +45,14 @@ class Table(object):
         self.opposingPlayer = self.player2 if startPlayer == 1 else self.player1
         logger.info('Player goes second is {0}'.format(self.currentPlayer.name))
         self.opposingPlayer.logPlayer(True)
-        turnCount = 0
+        self.turnCounter = 0
         while(True):
-            turnCount += 1
+            self.turnCounter += 1
             sys.stdout.write(ConsoleColors.Brown.value)
             print('############################### Player {0} TURN ######################'.format(startPlayer))
-            logger.info('####################### TURN {0} #############################'.format(turnCount))
+            logger.info('####################### TURN {0} #############################'.format(self.turnCounter))
             sys.stdout.write(ConsoleColors.Reset.value)
+            self.printTable()
 
             hasShieldsFaceDown = self.currentPlayer.hasCardsInPlayerArea(PlayerArea.Shields, True)
             logger.info('Current Player has Shields Face Down:{0}'.format(hasShieldsFaceDown))
@@ -174,27 +172,31 @@ class Table(object):
         print('------------- Player2 play area ---------------')
         print('')
         print('------------- Discard Pile ---------------- ')
-        for card in self.player2.playerArea['DiscardPile']:
-            card.printCard(card)
+        if self.opposingPlayer:
+            for card in self.opposingPlayer.playerArea['DiscardPile']:
+                card.printCard(card)
         print('----------------------------------- ')
         print('')
         print('------------- Hand ---------------- ')
         sys.stdout.write(ConsoleColors.LightGreen.value)
-        self.player2.hand.printHand()
+        if self.opposingPlayer:
+            self.opposingPlayer.hand.printHand()
         sys.stdout.write(ConsoleColors.Reset.value)
         print('----------------------------------- ')
         print('')
         print('------------- Talents ---------------- ')
         sys.stdout.write(ConsoleColors.Blue.value)
-        for card in self.player2.playerArea['Talents']:
-            card.printCard(card)
+        if self.opposingPlayer:
+            for card in self.opposingPlayer.playerArea['Talents']:
+                card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('----------------------------------- ')
         print('')
         print('------------- Shields ---------------- ')
         sys.stdout.write(ConsoleColors.Red.value)
-        for card in self.player2.playerArea['Shields']:
-            card.printCard(card)
+        if self.opposingPlayer:
+            for card in self.opposingPlayer.playerArea['Shields']:
+                card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('----------------------------------- ')
         print('')
@@ -202,28 +204,32 @@ class Table(object):
         print('')
         print('----------------------------------- ')
         sys.stdout.write(ConsoleColors.Red.value)
-        for card in self.player1.playerArea['Shields']:
-            card.printCard(card)
+        if self.currentPlayer:
+            for card in self.currentPlayer.playerArea['Shields']:
+                card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Shields ---------------- ')
         print('----------------------------------- ')
         sys.stdout.write(ConsoleColors.Blue.value)
-        for card in self.player1.playerArea['Talents']:
-            card.printCard(card)
+        if self.currentPlayer:
+            for card in self.currentPlayer.playerArea['Talents']:
+                card.printCard(card)
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Talents ---------------- ')
         print('')
         print('----------------------------------- ')
         sys.stdout.write(ConsoleColors.LightGreen.value)
-        self.player1.hand.printHand()
+        if self.currentPlayer:
+            self.currentPlayer.hand.printHand()
         sys.stdout.write(ConsoleColors.Reset.value)
         print('')
         print('------------- Hand ---------------- ')
         print('----------------------------------- ')
-        for card in self.player1.playerArea['DiscardPile']:
-            card.printCard(card)
+        if self.currentPlayer:
+            for card in self.currentPlayer.playerArea['DiscardPile']:
+                card.printCard(card)
         print('')
         print('------------- Discard Pile ---------------- ')
         print('')
