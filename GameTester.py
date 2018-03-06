@@ -62,5 +62,5 @@ player2.hand = player2Hand
 # player2.hand.printHand()
 
 playTable = Table(player1=player1, player2=player2)
-playTable.printTable()
+# playTable.printTable()
 playTable.startGame()
